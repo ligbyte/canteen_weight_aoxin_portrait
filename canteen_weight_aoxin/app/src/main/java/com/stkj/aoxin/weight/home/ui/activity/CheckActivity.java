@@ -269,6 +269,7 @@ public class CheckActivity extends BaseActivity {
                                     btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_begin);
                                     ll_gross_weight.setBackgroundResource(R.drawable.weight_input_bg);
                                     tvGrossWeight.setTextColor(Color.parseColor("#1D2129"));
+                                    tvReviewTareValue.setText("--" + globalUnit);
                                     tvReviewGrossValue.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier ) + globalUnit);
                                     return;
                                 }
@@ -325,6 +326,7 @@ public class CheckActivity extends BaseActivity {
 //                            btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_default);
 //                            tvGrossWeight.setText("0.00");
                             if (tvGrossWeight.getText().toString().trim().equals("请放置商品")){
+                                tvReviewTareValue.setText("--" + globalUnit);
                                 tvReviewGrossValue.setText("--" + globalUnit);
                             }
 
@@ -501,6 +503,7 @@ public class CheckActivity extends BaseActivity {
                 }else {
                     tvMissingAmountValue.setText("0.00元");
                     tvReviewAmountValue.setText("0.00元");
+                    tvReviewTareValue.setText("--" + globalUnit);
                     tvReviewGrossValue.setText("--" + globalUnit);
                     tvNetWeightDiffValue.setText("--" + globalUnit);
 
@@ -840,6 +843,7 @@ public class CheckActivity extends BaseActivity {
                 tvNetWeightDiffValue.setText("--" + globalUnit);
                 tvMissingAmountValue.setText("0.00元");
                 tvReviewAmountValue.setText("0.00元");
+                tvReviewTareValue.setText("--" + globalUnit);
                 tvReviewGrossValue.setText("--" + globalUnit);
 
                 handCalculator.getTvConsume().setText("");
@@ -1340,7 +1344,7 @@ public class CheckActivity extends BaseActivity {
 
         ToastUtils.toastMsgWarning("分次称重");
         EventBus.getDefault().post(new TTSSpeakEvent("分次称重"));
-
+        radioGroupQuPi.clearCheck();
 
           if (AppApplication.supplyProductOrderDetailList.size() > 0){
               ll_goods_count.setVisibility(View.VISIBLE);
@@ -1472,7 +1476,7 @@ public class CheckActivity extends BaseActivity {
 //            supplyProductOrderDetailList.get(currentIndex).setPassImageUrl("");
             btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_default);
             btnTakePackagePhoto.setImageResource(R.mipmap.take_photo_default);
-
+            tvReviewTareValue.setText("--" + globalUnit);
             tvReviewGrossValue.setText("--" + globalUnit);
             tvNetWeightDiffValue.setText("--" + globalUnit);
             tvOrderWeightValue.setText(supplyProductOrderDetailList.get(currentIndex).getPurchaseNumber() + globalUnit);
@@ -1937,6 +1941,7 @@ public class CheckActivity extends BaseActivity {
 
         tv_check_maozhong.setText("复核毛重（" + globalUnit + "）");
         tv_review_tare_summary.setText("复核皮重（" + globalUnit + "）");
+        tvReviewTareValue.setText("--" + globalUnit);
         tvReviewGrossValue.setText("--" + globalUnit);
         tvNetWeightDiffValue.setText("--" + globalUnit);
 

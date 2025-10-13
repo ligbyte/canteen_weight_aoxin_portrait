@@ -74,8 +74,8 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
             holder.tvOrderQuantity.setText("订单重量：" + DECIMAL_FORMAT.format(product.getPurchaseNumber()) + "" + product.getPackageUnit());
             holder.tvVerifiedQuantity.setText("复核重量：" + DECIMAL_FORMAT.format(product.getReviewNumber()) + "" + product.getPackageUnit());
         }else {
-            holder.tvOrderQuantity.setText("订单数量：" + product.getPurchaseNumber() + "" + product.getPackageUnit());
-            holder.tvVerifiedQuantity.setText("复核数量：" + product.getReviewNumber() + "" + product.getPackageUnit());
+            holder.tvOrderQuantity.setText("订单数量：" + DECIMAL_FORMAT.format(product.getPurchaseNumber()) + "" + product.getPackageUnit());
+            holder.tvVerifiedQuantity.setText("复核数量：" + DECIMAL_FORMAT.format(product.getReviewNumber()) + "" + product.getPackageUnit());
         }
 
 
