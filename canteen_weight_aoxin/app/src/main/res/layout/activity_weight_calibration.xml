@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:id="@+id/rl_jiaozhun"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BB000000">
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="@color/white"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_order_back"/>
+
+
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_back"
+                android:paddingLeft="@dimen/dp_2"
+                android:textSize="20sp"
+                android:text="返回"
+                android:textColor="@color/black"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:text="校准"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginBottom="16dp" />
+
+        </RelativeLayout>
+
+        <!--   称重校准 -->
+        <LinearLayout
+            android:id="@+id/ll_app_weight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_back"
+            android:layout_marginTop="@dimen/dp_30"
+            android:paddingLeft="@dimen/dp_25"
+            android:paddingRight="@dimen/dp_25"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_weight_calibration"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/bg_calibration">
+
+
+                <TextView
+                    android:id="@+id/tv_g"
+                    android:layout_width="@dimen/dp_69"
+                    android:layout_height="@dimen/dp_28"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="暂未读值"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"
+                    android:background="@null"
+                    android:textStyle="bold"/>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_read_weight"
+                android:layout_width="@dimen/dp_69"
+                android:layout_height="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="开始读值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                android:background="@drawable/btn_gradient_bottom_to_top"/>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_weight_reset"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@null">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_weight_reset_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="重置"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tv_weight_reset_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:text="物品固定好后，将初始值归零"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="@dimen/sp_9"
+                        android:textStyle="normal" />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/arrow_right_reset"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:includeFontPadding="false"
+                    android:src="@mipmap/arrow" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="#1AFFFFFF" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>

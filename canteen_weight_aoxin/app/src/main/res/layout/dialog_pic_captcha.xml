@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dialog_overlay">
+
+
+
+    <!-- Dialog Container -->
+    <LinearLayout
+        android:id="@+id/ll_dialog_login"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/dialog_background_1dp"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_7">
+
+        <!-- Dialog Title -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/success_title"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_dialog_close_black" />
+
+    </RelativeLayout>
+
+        <!-- Captcha Input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/input_background"
+                android:padding="16dp"
+                android:layout_marginEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/ic_check"
+                    android:layout_marginEnd="12dp"
+                    app:tint="@color/text_hint" />
+
+                <EditText
+                    android:id="@+id/et_captcha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入验证码"
+                    android:textColorHint="@color/text_hint"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:background="@color/transparent"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <!-- Captcha Display -->
+            <ImageView
+                android:id="@+id/iv_captcha"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="1dp"
+                android:background="@drawable/bg_caprcha"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+
+        <!-- Single Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_single"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="@drawable/button_captcha_bg"
+            android:text="@string/confirm_button"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- Double Button Container -->
+        <LinearLayout
+            android:id="@+id/layout_double_buttons"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/dp_18"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <!-- Left Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/button_captcha_bg"
+                android:text="@string/confirm_button"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Right Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/button_captcha_blue_bg"
+                android:text="@string/confirm_button"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>>
+
+</FrameLayout>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_60"
+    android:background="@color/white">
+
+    <!-- Product Image -->
+    <com.stkj.common.ui.widget.common.RoundImageView
+        android:id="@+id/iv_product"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="12dp"
+        app:type="round"
+        app:srcCompat="@mipmap/ic_cai_default"
+        app:leftBottom_corner_radius="8dp"
+        app:leftTop_corner_radius="8dp"
+        app:rightBottom_corner_radius="8dp"
+        app:rightTop_corner_radius="8dp"/>
+
+    <!-- Product Details Container -->
+    <LinearLayout
+        android:id="@+id/layout_product_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_product"
+        android:layout_toLeftOf="@id/layout_order_info"
+        android:orientation="vertical"
+        android:layout_marginRight="16dp">
+
+        <!-- Product Name -->
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="五花肉"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Product Info Row 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tv_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="品牌：--"
+                android:textColor="@color/black"
+                android:textSize="14.5sp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/tv_quality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="质量等级：--"
+                android:textColor="@color/black"
+                android:textSize="14.5sp"
+                android:layout_marginRight="16dp" />
+
+
+        </LinearLayout>
+
+
+        <!-- Product Info Row 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_origin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="产地：--"
+                android:textColor="@color/black"
+                android:textSize="14.5sp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/tv_packaging"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="包装规格：--"
+                android:textColor="@color/black"
+                android:textSize="14.5sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Order Info Container -->
+    <LinearLayout
+        android:id="@+id/layout_order_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_toLeftOf="@id/layout_photos"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tv_unit_price"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="@dimen/dp_16"
+            android:text="单价：8.30 元/公斤"
+            android:textColor="@color/black"
+            android:textSize="14.5sp" />
+
+        <!-- Order Quantity Section -->
+        <LinearLayout
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/dp_16"
+            android:minWidth="100dp">
+
+            <TextView
+                android:id="@+id/tv_order_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单重量：20.00公斤"
+                android:textColor="@color/black"
+                android:textSize="14.5sp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/tv_verified_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复核毛重：19.00公斤"
+                android:textColor="@color/button_blue"
+                android:textSize="14.5sp" />
+
+        </LinearLayout>
+
+        <!-- Order Amount Section -->
+        <LinearLayout
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="16dp"
+            android:minWidth="100dp">
+
+            <TextView
+                android:id="@+id/tv_order_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单金额：¥166.00"
+                android:textColor="@color/black"
+                android:textSize="14.5sp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/tv_verified_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复核金额：¥157.70"
+                android:textColor="@color/button_blue"
+                android:textSize="14.5sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Photo Section -->
+    <LinearLayout
+        android:id="@+id/layout_photos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <!-- Photo 1 -->
+        <FrameLayout
+            android:layout_width="@dimen/dp_71"
+            android:layout_height="@dimen/dp_40"
+            android:background="@drawable/rounded_corner_8dp"
+            android:layout_marginRight="20dp">
+
+            <com.stkj.common.ui.widget.common.RoundImageView
+                android:id="@+id/iv_photo1"
+                android:layout_width="@dimen/dp_71"
+                android:layout_height="@dimen/dp_40"
+                android:scaleType="centerCrop"
+                android:background="@drawable/rounded_corner_8dp"
+                app:type="round"
+                app:srcCompat="@mipmap/ic_cai_default"
+                app:leftBottom_corner_radius="8dp"
+                app:leftTop_corner_radius="8dp"
+                app:rightBottom_corner_radius="8dp"
+                app:rightTop_corner_radius="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品照片"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:layout_gravity="top|start"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/text_corner_2dp"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_mode"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
+                android:layout_gravity="right|bottom"
+                android:src="@mipmap/ic_use_mode"
+                android:layout_margin="@dimen/dp_4"
+                android:textColor="@color/black"
+                android:textSize="14.5sp" />
+
+        </FrameLayout>
+
+        <!-- Photo 2 or Restock Button -->
+        <FrameLayout
+            android:id="@+id/layout_photo2_container"
+            android:layout_width="@dimen/dp_71"
+            android:layout_height="@dimen/dp_40"
+            android:background="@drawable/rounded_corner_8dp">
+
+            <com.stkj.common.ui.widget.common.RoundImageView
+                android:id="@+id/iv_photo2"
+                android:layout_width="@dimen/dp_71"
+                android:layout_height="@dimen/dp_40"
+                android:scaleType="centerCrop"
+                android:background="@drawable/rounded_corner_8dp"
+                app:type="round"
+                app:srcCompat="@mipmap/ic_cai_default"
+                app:leftBottom_corner_radius="8dp"
+                app:leftTop_corner_radius="8dp"
+                app:rightBottom_corner_radius="8dp"
+                app:rightTop_corner_radius="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="包装照片"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:layout_gravity="top|start"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/text_corner_2dp"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_E5E6EB" />
+
+</RelativeLayout>

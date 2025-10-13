@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">慧称重</string>
+
+
+    <!-- Login screen strings -->
+    <string name="app_title">新安县智慧食堂管理平台</string>
+    <string name="account_login">账号登录</string>
+    <string name="hint_username">请输入账号</string>
+    <string name="hint_password">请输入密码</string>
+    <string name="captcha_placeholder">发送验证码</string>
+    <string name="remember_password">记住密码</string>
+    <string name="forgot_password">忘记密码</string>
+    <string name="login_button">登录</string>
+    <string name="show_password">显示密码</string>
+    <string name="hide_password">隐藏密码</string>
+
+
+    <string name="order_review_title">订单复核</string>
+    <string name="back">返回</string>
+
+    <!-- 分类菜单 -->
+    <string name="category_cucumber">黄瓜</string>
+    <string name="category_spinach">菠菜</string>
+    <string name="category_pork_belly">五花肉</string>
+    <string name="category_lettuce">生菜</string>
+    <string name="category_bean">豆角</string>
+    <string name="category_pumpkin">南瓜</string>
+    <string name="category_broccoli">西兰花</string>
+    <string name="category_carrot">胡萝卜</string>
+    <string name="category_onion">洋葱</string>
+    <string name="category_pepper">青椒</string>
+
+    <!-- 商品信息 -->
+    <string name="product_name">--</string>
+    <string name="package_format">包装规格：--</string>
+    <string name="pricing_unit">计价单位：--</string>
+    <string name="unit_price">单价：--</string>
+
+    <!-- 重量输入 -->
+    <string name="review_gross_weight">复核毛重（公斤）</string>
+    <string name="review_tare_weight">复核皮重（公斤）</string>
+    <string name="weight_hint">请放置包装</string>
+    <string name="reweight">重新称重</string>
+    <string name="product_photo">商品照片</string>
+    <string name="package_photo">包装照片</string>
+    <string name="start_photo">开始拍照</string>
+    <string name="photo_missing">整装去皮</string>
+
+    <!-- 复核详情 -->
+    <string name="review_details">复核详情</string>
+    <string name="product_weight">商品重量</string>
+    <string name="order_weight">订单重量：</string>
+    <string name="review_gross">复称毛重：</string>
+    <string name="review_tare">复称皮重：</string>
+    <string name="net_weight_diff">净重差额：</string>
+    <string name="product_amount">商品金额</string>
+    <string name="order_amount">订单金额：</string>
+    <string name="missing_amount">误差金额：</string>
+    <string name="review_amount">复核金额：</string>
+
+    <!-- 操作按钮 -->
+    <string name="cancel">取消</string>
+    <string name="return_exchange">退换</string>
+
+    <!-- 单位和格式 -->
+    <string name="weight_unit_jin">公斤</string>
+    <string name="currency_symbol">¥</string>
+    <string name="weight_format">%.2f公斤</string>
+    <string name="amount_format">¥%.2f</string>
+    <string name="missing_placeholder">--公斤</string>
+    <string name="amount_missing_placeholder">--元</string>
+
+    <!-- 分类名称数组 -->
+    <string-array name="category_names">
+        <item>黄瓜</item>
+        <item>菠菜</item>
+        <item>五花肉</item>
+        <item>生菜</item>
+        <item>豆角</item>
+        <item>南瓜</item>
+        <item>西兰花</item>
+        <item>胡萝卜</item>
+        <item>洋葱</item>
+        <item>青椒</item>
+    </string-array>
+
+
+    <string name="success_title">签收成功</string>
+    <string name="next_order_button">验收下个订单</string>
+    <string name="show_dialog">Show Success Dialog</string>
+    <string name="operation_success">操作成功</string>
+    <string name="continue_operation">继续操作</string>
+    <string name="task_completed">任务完成</string>
+    <string name="confirm_button">确认</string>
+    <string name="cancel_button">取消</string>
+    <string name="ok_button">好的</string>
+    <string name="retry_button">重试</string>
+
+
+    <!-- Order Confirmation Strings -->
+    <string name="order_confirmation">签收确认</string>
+    <string name="order_time_label">订单时间：</string>
+    <string name="supplier_label">供货单位：</string>
+    <string name="product_count_label">商品数量：</string>
+    <string name="verified_count_label">签收数量：</string>
+    <string name="return_count_label">退货数量：</string>
+    <string name="order_total_label">订单总额：</string>
+    <string name="verified_total_label">复核总额：</string>
+    <string name="brand_label">品牌：</string>
+    <string name="quality_label">质量等级：</string>
+    <string name="unit_price_label">单价：</string>
+    <string name="origin_label">产地：</string>
+    <string name="packaging_label">包装规格：</string>
+    <string name="order_quantity_label">订单数量：</string>
+    <string name="verified_quantity_label">复核数量：</string>
+    <string name="order_amount_label">订单金额：</string>
+    <string name="verified_amount_label">复核金额：</string>
+
+
+    <!-- Weighing Activity Strings -->
+    <string name="net_weight">净重</string>
+    <string name="stable">稳定</string>
+    <string name="zero">零位</string>
+    <string name="tare_weight">皮</string>
+    <string name="gross_weight">总</string>
+    <string name="unit_price_weight">单价:</string>
+    <string name="total_price">总价:</string>
+    <string name="unit_kg">元/kg</string>
+    <string name="unit_yuan">元</string>
+    <string name="btn_calibration">校准</string>
+    <string name="btn_tare">去皮</string>
+    <string name="btn_zero">置零</string>
+    <string name="weight_format_weight">%.3f kg</string>
+    <string name="price_format">%.2f</string>
+
+</resources>

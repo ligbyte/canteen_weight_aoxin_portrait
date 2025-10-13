@@ -1,0 +1,31 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        maven { url "https://jitpack.io" }
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        maven { url "https://jitpack.io" }
+    }
+}
+
+rootProject.name = "canteen_weight_aoxin"
+include ':app'
+include ':common'
+project(':common').projectDir = new File('../common')
+include ':deviceinterface'
+project(':deviceinterface').projectDir = new File('../deviceinterface')
+include ':canteen_weight_aoxin_portrait'
+project(':canteen_weight_aoxin_portrait').projectDir = new File('../canteen_weight_aoxin_portrait')
