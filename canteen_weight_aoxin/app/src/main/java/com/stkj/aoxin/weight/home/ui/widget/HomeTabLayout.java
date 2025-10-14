@@ -43,7 +43,7 @@ public class HomeTabLayout extends RecyclerView {
 
     public void init(Context context) {
         setItemAnimator(null);
-        setLayoutManager(new LinearLayoutManager(context) {
+        setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false) {
             @Override
             public boolean canScrollHorizontally() {
                 return false;

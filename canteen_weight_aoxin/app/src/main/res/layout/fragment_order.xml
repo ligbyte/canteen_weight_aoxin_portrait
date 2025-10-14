@@ -4,7 +4,6 @@
     android:id="@+id/fl_pay_second_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dp_5"
     android:background="#f5f5f5">
 
     <RelativeLayout

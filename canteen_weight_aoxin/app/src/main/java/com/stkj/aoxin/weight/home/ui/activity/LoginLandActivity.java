@@ -68,7 +68,6 @@ public class LoginLandActivity extends AppCompatActivity {
     private TextView tv_account_login;
     private ImageView ivPasswordToggle;
 
-    private ImageView iv_wifi;
     private TextView tvCaptcha, tvForgotPassword,tv_sn;
     private CheckBox cbRemember;
     private Button btnLogin;
@@ -121,7 +120,6 @@ public class LoginLandActivity extends AppCompatActivity {
         tv_account_login = findViewById(R.id.tv_account_login);
         ivPasswordToggle = findViewById(R.id.iv_password_toggle);
         ll_login = findViewById(R.id.ll_login);
-        iv_wifi = findViewById(R.id.iv_wifi);
         tvCaptcha = findViewById(R.id.tv_captcha);
         tvCaptcha.setSelected(true);
         tvCaptcha.setEnabled(true);
@@ -147,7 +145,7 @@ public class LoginLandActivity extends AppCompatActivity {
 
         if (!NetworkUtils.isConnected()) {
             ToastUtils.toastMsgError("请连接网络");
-            NetDialog dialog = new NetDialog(this, "设备暂无网络，请检查", "去设置");
+            NetDialog dialog = new NetDialog(this, "设备未联网，请先连接网络", "去设置");
             dialog.setOnDialogActionListener(new NetDialog.OnDialogActionListener() {
                 @Override
                 public void onSingleButtonClicked() {
@@ -191,10 +189,10 @@ public class LoginLandActivity extends AppCompatActivity {
         // Login button
         btnLogin.setOnClickListener(v -> performLogin());
 
-        iv_wifi.setOnClickListener(v -> {
-            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-            startActivity(intent);
-        });
+//        iv_wifi.setOnClickListener(v -> {
+//            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+//            startActivity(intent);
+//        });
 
         tv_account_login.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -247,7 +245,7 @@ public class LoginLandActivity extends AppCompatActivity {
      */
     private void moveLoginLayoutUp(int moveDistance) {
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) ll_login.getLayoutParams();
-        layoutParams.topMargin = (int)(-moveDistance * 0.9f) ; // 上移键盘高度的一半
+        layoutParams.topMargin = (int)(-moveDistance * 0.1f) ; // 上移键盘高度的一半
         ll_login.setLayoutParams(layoutParams);
     }
 

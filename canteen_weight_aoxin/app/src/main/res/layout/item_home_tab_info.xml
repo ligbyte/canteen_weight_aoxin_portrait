@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/dp_80"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_11">
+    android:gravity="center_vertical">
 
     <com.stkj.common.ui.widget.shapelayout.ShapeLinearLayout
         android:id="@+id/sll_tab"
         android:layout_width="@dimen/dp_34"
         android:layout_height="@dimen/dp_34"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:gravity="center"
         android:orientation="vertical">
 

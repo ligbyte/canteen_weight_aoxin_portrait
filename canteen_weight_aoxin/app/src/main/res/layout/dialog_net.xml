@@ -30,7 +30,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginBottom="@dimen/dp_8"
-            android:text="设备暂无网络，请检查"
+            android:text="设备未联网，请先连接网络"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
