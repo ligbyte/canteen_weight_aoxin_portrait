@@ -5,15 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="@color/white"
     android:screenOrientation="landscape">
 
     <!-- Left Side - Scale Display -->
     <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center"
         android:background="@color/white">
@@ -21,14 +21,15 @@
         <!-- Scale Circle Container -->
         <FrameLayout
             android:id="@+id/fl_dash"
-            android:layout_width="767dp"
-            android:layout_height="767dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
 
             <!-- Custom Java-drawn Scale Dashboard -->
             <com.stkj.aoxin.weight.home.ui.widget.ScaleDashboardView
                 android:id="@+id/scale_dashboard"
-                android:layout_width="767dp"
-                android:layout_height="767dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"/>
 
             <!-- Center Text -->
@@ -38,7 +39,7 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_marginTop="115dp">
+                android:layout_marginTop="205dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="620dp"
+            android:layout_marginTop="750dp"
             android:gravity="center">
 
             <!-- 稳定 -->
@@ -153,7 +154,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="670dp"
+            android:layout_marginTop="800dp"
             android:gravity="center">
 
             <!-- Tare Weight (皮) -->
@@ -227,9 +228,9 @@
 
     <!-- Right Side - Input Panel -->
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:padding="30dp"
         android:background="@color/keypad_background">

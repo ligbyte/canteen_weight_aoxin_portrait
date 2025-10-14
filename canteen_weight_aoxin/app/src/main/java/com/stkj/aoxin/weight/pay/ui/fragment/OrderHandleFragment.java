@@ -92,14 +92,14 @@ public class OrderHandleFragment extends BaseRecyclerFragment {
 
         orderHandleListAdapter = new OrderHandleListAdapter(getActivity());
 
-        orderHandleListAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                Intent intent = new Intent(getActivity(), CheckActivity.class);
-                intent.putExtra("orderID", orderHandleListAdapter.getData().get(position).getId());
-                getActivity().startActivity(intent);
-            }
-        });
+//        orderHandleListAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+//                Intent intent = new Intent(getActivity(), CheckActivity.class);
+//                intent.putExtra("orderID", orderHandleListAdapter.getData().get(position).getId());
+//                getActivity().startActivity(intent);
+//            }
+//        });
 
         rvContent.setAdapter(orderHandleListAdapter);
         rvContent.setItemAnimator(null);
