@@ -274,7 +274,7 @@
             android:gravity="center"
             android:text="关闭"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_10"
             android:textStyle="bold" />
 
 
@@ -288,7 +288,7 @@
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/selector_calc_item_confirm"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_10"
             android:textStyle="bold" />
     </LinearLayout>
 

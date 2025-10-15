@@ -306,8 +306,8 @@ public class OrderActivity extends BaseActivity {
         tvProductCount.setText("商品数量：" + productCount);
         tvVerifiedCount.setText("签收数量：" + productCount);
         tvReturnCount.setText("退货数量：" + 0);
-        tvOrderTotal.setText("订单总额：¥" + DECIMAL_FORMAT.format(orderTotal));
-        tvVerifiedTotal.setText("复核总额：¥" + DECIMAL_FORMAT.format(verifiedTotal));
+        tvOrderTotal.setText("订单金额：¥" + DECIMAL_FORMAT.format(orderTotal));
+        tvVerifiedTotal.setText("复核金额：¥" + DECIMAL_FORMAT.format(verifiedTotal));
         
         // Update order summary object
         orderSummary.setProductCount(productCount);

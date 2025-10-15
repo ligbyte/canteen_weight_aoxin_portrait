@@ -36,6 +36,7 @@
     <color name="color_1B1F3C">#1B1F3C</color>
     <color name="color_161E35">#161E35</color>
 
+    <color name="color_3D3D3D">#3D3D3D</color>
 
     <color name="color_DAECFF">#DAECFF</color>
     <color name="color_F5F8FB">#F5F8FB</color>
@@ -110,6 +111,8 @@
     <color name="border_gray">#F2F3F5</color>
     <color name="button_blue">#317FF0</color>
     <color name="color_E5E6EB">#E5E6EB</color>
+    <color name="color_1D2129">#1D2129</color>
+
 
     <color name="blue">#FF2196F3</color>
     <color name="gray">#FF9E9E9E</color>

@@ -7,7 +7,7 @@
     <!-- 复核毛重 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="200dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/review_gross_weight"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp_9"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary" />
 
@@ -30,23 +30,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/tv_reweight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reweight"
-                android:textSize="14sp"
-                android:textColor="@color/text_blue"
-                android:clickable="true"
-                android:focusable="true" />
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_gross_weight"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:background="@drawable/weight_input_bg"
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dp_15"
@@ -63,14 +53,30 @@
 
         </LinearLayout>
 
+
+
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_reweight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:text="@string/reweight"
+        android:textSize="@dimen/sp_8"
+        android:textColor="@color/text_blue"
+        android:clickable="true"
+        android:focusable="true" />
+
+
 
     <!-- 复核皮重 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_23">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/review_tare_weight"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp_9"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary" />
 
@@ -92,56 +98,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <!-- 签收类型区域 -->
-            <RadioGroup
-                android:id="@+id/radioGroupQuPi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="24dp">
-
-                <RadioButton
-                    android:id="@+id/rb_qupi_package"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@null"
-                    android:layout_marginEnd="32dp"
-                    android:text="整装去皮"
-                    android:textColor="@color/radio_text_color"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/rb_qupi_shoudong"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="32dp"
-                    android:button="@null"
-                    android:text="手动去皮"
-                    android:textColor="@color/radio_text_color"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/rb_qupi_0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="0dp"
-                    android:button="@null"
-                    android:text="免皮重"
-                    android:textColor="@color/radio_text_color"
-                    android:textSize="16sp" />
-
-
-
-            </RadioGroup>
-
         </LinearLayout>
+
+
 
         <LinearLayout
             android:id="@+id/ll_trae_weight"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:background="@drawable/tare_weight_input_bg"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_6"
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dp_15"
             android:gravity="center_vertical">
@@ -157,6 +123,50 @@
 
         </LinearLayout>
 
+
     </LinearLayout>
 
+
+    <!-- 签收类型区域 -->
+    <RadioGroup
+        android:id="@+id/radioGroupQuPi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_8"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/dp_0">
+
+        <RadioButton
+            android:id="@+id/rb_qupi_package"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_marginEnd="32dp"
+            android:text="整装去皮"
+            android:textColor="@color/radio_text_color"
+            android:textSize="@dimen/sp_9" />
+
+        <RadioButton
+            android:id="@+id/rb_qupi_shoudong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:button="@null"
+            android:text="手动去皮"
+            android:textColor="@color/radio_text_color"
+            android:textSize="@dimen/sp_9" />
+
+        <RadioButton
+            android:id="@+id/rb_qupi_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:button="@null"
+            android:text="免皮重"
+            android:textColor="@color/radio_text_color"
+            android:textSize="@dimen/sp_9" />
+
+
+
+    </RadioGroup>
 </LinearLayout>

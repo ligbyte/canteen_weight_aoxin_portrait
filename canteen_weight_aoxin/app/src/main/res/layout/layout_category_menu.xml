@@ -2,20 +2,19 @@
 <com.stkj.common.ui.widget.shapelayout.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/category_layout"
-    android:layout_width="180dp"
+    android:layout_width="0dp"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_weight="40"
     android:background="@null"
-    android:paddingTop="15dp"
-    android:layout_marginLeft="@dimen/dp_3"
-    android:layout_marginTop="@dimen/dp_5"
-    android:layout_marginBottom="@dimen/dp_5"
-    app:radiusT="@dimen/dp_5"
+    android:paddingTop="1px"
+    app:radiusT="@dimen/dp_0"
     app:solidColorT="@color/white">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_7"/>
 
 </com.stkj.common.ui.widget.shapelayout.ShapeLinearLayout>

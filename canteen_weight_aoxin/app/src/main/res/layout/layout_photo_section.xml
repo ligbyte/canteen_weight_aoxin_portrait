@@ -8,14 +8,14 @@
     <!-- 商品照片 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="200dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/product_photo"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_9"
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
@@ -23,7 +23,7 @@
             android:id="@+id/btn_take_product_photo"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center"
             android:orientation="vertical"
             android:clickable="true"
@@ -47,15 +47,15 @@
     <!-- 包装照片 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/dp_0">
+        android:layout_marginTop="@dimen/dp_43">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/package_photo"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_9"
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
@@ -63,7 +63,7 @@
             android:id="@+id/btn_take_package_photo"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_6"
             android:gravity="center"
             android:orientation="vertical"
             android:clickable="true"

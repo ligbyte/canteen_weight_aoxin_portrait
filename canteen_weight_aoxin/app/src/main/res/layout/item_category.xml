@@ -3,19 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp">
+    android:paddingLeft="@dimen/dp_8"
+    android:paddingRight="@dimen/dp_8"
+    android:paddingTop="@dimen/dp_2"
+    android:paddingBottom="@dimen/dp_2">
 
     <TextView
         android:id="@+id/tv_category_name"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="@dimen/dp_27"
         android:layout_marginLeft="@dimen/dp_5"
         android:layout_marginRight="@dimen/dp_5"
-        android:textSize="16sp"
-        android:gravity="center"
+        android:textSize="@dimen/sp_9"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_3"
         android:clickable="true"
         android:focusable="true" />
 

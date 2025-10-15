@@ -2,8 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_60"
+    android:layout_height="wrap_content"
     android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/rl_row1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@null">
 
     <!-- Product Image -->
     <com.stkj.common.ui.widget.common.RoundImageView
@@ -13,24 +19,23 @@
         android:layout_centerVertical="true"
         android:scaleType="centerCrop"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="12dp"
         app:type="round"
         app:srcCompat="@mipmap/ic_cai_default"
-        app:leftBottom_corner_radius="8dp"
-        app:leftTop_corner_radius="8dp"
-        app:rightBottom_corner_radius="8dp"
-        app:rightTop_corner_radius="8dp"/>
+        app:corner_radius="@dimen/dp_5"/>
 
     <!-- Product Details Container -->
     <LinearLayout
         android:id="@+id/layout_product_details"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/iv_product"
-        android:layout_toLeftOf="@id/layout_order_info"
         android:orientation="vertical"
-        android:layout_marginRight="16dp">
+        android:layout_marginLeft="@dimen/dp_5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4">
 
         <!-- Product Name -->
         <TextView
@@ -39,16 +44,39 @@
             android:layout_height="wrap_content"
             android:text="五花肉"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_9"
+            android:layout_marginTop="@dimen/dp_2"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tv_unit_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_2"
+                android:text="单价：8.30 元/公斤"
+                android:textColor="@color/price_red"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_9" />
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
 
         <!-- Product Info Row 1 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/iv_product"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5">
 
             <TextView
                 android:id="@+id/tv_brand"
@@ -56,27 +84,9 @@
                 android:layout_height="wrap_content"
                 android:text="品牌：--"
                 android:textColor="@color/black"
-                android:textSize="14.5sp"
+                android:textSize="@dimen/sp_7"
                 android:layout_marginRight="16dp" />
 
-            <TextView
-                android:id="@+id/tv_quality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="质量等级：--"
-                android:textColor="@color/black"
-                android:textSize="14.5sp"
-                android:layout_marginRight="16dp" />
-
-
-        </LinearLayout>
-
-
-        <!-- Product Info Row 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_origin"
@@ -84,8 +94,20 @@
                 android:layout_height="wrap_content"
                 android:text="产地：--"
                 android:textColor="@color/black"
-                android:textSize="14.5sp"
+                android:textSize="@dimen/sp_7"
                 android:layout_marginRight="16dp" />
+
+
+            <TextView
+                android:id="@+id/tv_quality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="质量等级：--"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_7"
+                android:layout_marginRight="16dp" />
+
+
 
             <TextView
                 android:id="@+id/tv_packaging"
@@ -93,11 +115,11 @@
                 android:layout_height="wrap_content"
                 android:text="包装规格：--"
                 android:textColor="@color/black"
-                android:textSize="14.5sp" />
+                android:textSize="@dimen/sp_7"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <!-- Order Info Container -->
     <LinearLayout
@@ -105,27 +127,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginRight="@dimen/dp_30"
-        android:layout_toLeftOf="@id/layout_photos"
-        android:layout_centerVertical="true">
-
-        <TextView
-            android:id="@+id/tv_unit_price"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginRight="@dimen/dp_16"
-            android:text="单价：8.30 元/公斤"
-            android:textColor="@color/black"
-            android:textSize="14.5sp" />
+        android:layout_below="@+id/rl_row1"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_centerHorizontal="true">
 
         <!-- Order Quantity Section -->
         <LinearLayout
-            android:layout_width="@dimen/dp_80"
+            android:layout_width="@dimen/dp_105"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginRight="@dimen/dp_16"
-            android:minWidth="100dp">
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_10"
+            android:background="@drawable/rounded_corner_gray_8dp"
+            android:layout_marginRight="@dimen/dp_25">
 
             <TextView
                 android:id="@+id/tv_order_quantity"
@@ -133,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:text="订单重量：20.00公斤"
                 android:textColor="@color/black"
-                android:textSize="14.5sp"
+                android:textSize="@dimen/sp_8"
                 android:layout_marginBottom="10dp" />
 
             <TextView
@@ -142,17 +156,19 @@
                 android:layout_height="wrap_content"
                 android:text="复核毛重：19.00公斤"
                 android:textColor="@color/button_blue"
-                android:textSize="14.5sp" />
+                android:textSize="@dimen/sp_8" />
 
         </LinearLayout>
-
+        dp_95
         <!-- Order Amount Section -->
         <LinearLayout
-            android:layout_width="@dimen/dp_80"
+            android:layout_width="@dimen/dp_105"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_10"
+            android:background="@drawable/rounded_corner_gray_8dp"
             android:orientation="vertical"
-            android:layout_marginRight="16dp"
-            android:minWidth="100dp">
+            android:layout_marginLeft="@dimen/dp_25">
 
             <TextView
                 android:id="@+id/tv_order_amount"
@@ -160,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:text="订单金额：¥166.00"
                 android:textColor="@color/black"
-                android:textSize="14.5sp"
+                android:textSize="@dimen/sp_8"
                 android:layout_marginBottom="10dp" />
 
             <TextView
@@ -169,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:text="复核金额：¥157.70"
                 android:textColor="@color/button_blue"
-                android:textSize="14.5sp" />
+                android:textSize="@dimen/sp_8" />
 
         </LinearLayout>
 
@@ -181,20 +197,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_below="@+id/layout_order_info">
 
         <!-- Photo 1 -->
         <FrameLayout
-            android:layout_width="@dimen/dp_71"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_105"
+            android:layout_height="@dimen/dp_57"
             android:background="@drawable/rounded_corner_8dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="@dimen/dp_25">
 
             <com.stkj.common.ui.widget.common.RoundImageView
                 android:id="@+id/iv_photo1"
-                android:layout_width="@dimen/dp_71"
-                android:layout_height="@dimen/dp_40"
+                android:layout_width="@dimen/dp_105"
+                android:layout_height="@dimen/dp_57"
                 android:scaleType="centerCrop"
                 android:background="@drawable/rounded_corner_8dp"
                 app:type="round"
@@ -232,14 +250,15 @@
         <!-- Photo 2 or Restock Button -->
         <FrameLayout
             android:id="@+id/layout_photo2_container"
-            android:layout_width="@dimen/dp_71"
-            android:layout_height="@dimen/dp_40"
-            android:background="@drawable/rounded_corner_8dp">
+            android:layout_width="@dimen/dp_105"
+            android:layout_height="@dimen/dp_57"
+            android:background="@drawable/rounded_corner_8dp"
+            android:layout_marginLeft="@dimen/dp_25">
 
             <com.stkj.common.ui.widget.common.RoundImageView
                 android:id="@+id/iv_photo2"
-                android:layout_width="@dimen/dp_71"
-                android:layout_height="@dimen/dp_40"
+                android:layout_width="@dimen/dp_105"
+                android:layout_height="@dimen/dp_57"
                 android:scaleType="centerCrop"
                 android:background="@drawable/rounded_corner_8dp"
                 app:type="round"
@@ -269,7 +288,7 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:background="@color/color_E5E6EB" />
 

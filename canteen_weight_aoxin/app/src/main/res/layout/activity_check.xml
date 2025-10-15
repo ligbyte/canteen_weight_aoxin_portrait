@@ -27,9 +27,10 @@
 
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_order_back"
             android:padding="4dp"
             android:layout_marginRight="5dp"
@@ -40,9 +41,9 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/btn_back"
+            android:layout_centerInParent="true"
             android:text="@string/order_review_title"
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_10"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:gravity="left|center_vertical"
@@ -96,7 +97,7 @@
 
 
         <!-- 右侧复核详情 -->
-        <include layout="@layout/layout_review_details" />
+<!--        <include layout="@layout/layout_review_details" />-->
 
     </LinearLayout>
 
@@ -112,7 +113,7 @@
         android:id="@+id/ll_keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_86"
+        android:layout_marginLeft="@dimen/dp_89"
         android:layout_marginRight="@dimen/dp_4"
         android:layout_marginBottom="@dimen/dp_5"
         android:layout_gravity="bottom"
