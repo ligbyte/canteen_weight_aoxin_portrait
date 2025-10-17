@@ -24,6 +24,7 @@ import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -42,11 +43,16 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.fastjson.JSON;
+import com.lztek.toolkit.Lztek;
+import com.stkj.aoxin.weight.base.utils.CommonDialogUtils;
 import com.stkj.aoxin.weight.home.helper.HeartBeatHelper;
+import com.stkj.aoxin.weight.home.model.StoreInfo;
 import com.stkj.aoxin.weight.login.helper.LoginHelper;
 import com.stkj.aoxin.weight.pay.model.InitWeightEvent;
+import com.stkj.aoxin.weight.setting.helper.StoreInfoHelper;
 import com.stkj.common.core.AppManager;
 import com.stkj.common.core.CountDownHelper;
+import com.stkj.common.download.DownloadFileInfo;
 import com.stkj.common.glide.GlideApp;
 import com.stkj.common.log.LogHelper;
 import com.stkj.common.net.retrofit.RetrofitManager;
@@ -98,7 +104,6 @@ import com.stkj.aoxin.weight.pay.model.BindFragmentSwitchEvent;
 import com.stkj.aoxin.weight.pay.model.TTSSpeakEvent;
 import com.stkj.aoxin.weight.setting.data.ServerSettingMMKV;
 import com.stkj.aoxin.weight.setting.helper.AppUpgradeHelper;
-import com.stkj.aoxin.weight.setting.helper.StoreInfoHelper;
 import com.stkj.aoxin.weight.setting.model.FoodInfoTable;
 
 import org.greenrobot.eventbus.EventBus;
@@ -117,7 +122,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 
-public class MainActivity extends BaseActivity implements AppNetCallback, ConsumerListener,SystemEventWatcherHelper.OnSystemEventListener {
+public class MainActivity extends BaseActivity implements AppNetCallback, ConsumerListener,SystemEventWatcherHelper.OnSystemEventListener,AppUpgradeHelper.OnAppUpgradeListener {
 
     public final static String TAG = "MainActivity";
     //当前TAB界面
@@ -177,6 +182,9 @@ public class MainActivity extends BaseActivity implements AppNetCallback, Consum
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
 
+        //检查更新状态
+        AppUpgradeHelper appUpgradeHelper = getWeakRefHolder(AppUpgradeHelper.class);
+        appUpgradeHelper.setOnAppUpgradeListener(this);
 //        Log.d(TAG, "limeMD5Utils: " + MD5Utils.encrypt("ly0379"));
 
 //        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -767,6 +775,69 @@ public class MainActivity extends BaseActivity implements AppNetCallback, Consum
         );
     }
 
+    @Override
+    public void onCheckVersionEnd(String msg) {
+        if (!TextUtils.isEmpty(msg) && !msg.contains("最新版本")) {
+            CommonDialogUtils.showTipsDialog(MainActivity.this, msg);
+        }
+    }
+
+    @Override
+    public void onCheckVersionStart() {
+
+    }
+
+    @Override
+    public void onCheckVersionError(String msg) {
+        CommonDialogUtils.showTipsDialog(MainActivity.this, "检查更新失败:" + msg);
+    }
+
+    @Override
+    public void onNoVersionUpgrade() {
+
+    }
+
+    @Override
+    public void onDownloadStart(DownloadFileInfo downloadFileInfo) {
+    }
+
+    @Override
+    public void onDownloadProgress(int progress) {
+    }
+
+    @Override
+    public void onDownloadError(String msg) {
+        AppToast.toastMsg("下载app失败");
+    }
+
+    @Override
+    public void onDownloadSuccess(DownloadFileInfo downloadFileInfo, boolean isForceUpdate) {
+        if (!isForceUpdate) {
+            CommonAlertDialogFragment commonAlertDialogFragment = CommonAlertDialogFragment.build()
+                    .setAlertTitleTxt("版本升级")
+                    .setAlertContentTxt("新版本下完毕，点击更新")
+                    .setLeftNavTxt("更新")
+                    .setNeedHandleDismiss(true)
+                    .setLeftNavClickListener(new CommonAlertDialogFragment.OnSweetClickListener() {
+                        @Override
+                        public void onClick(CommonAlertDialogFragment alertDialogFragment) {
+                            //去安装
+                            alertDialogFragment.dismiss();
+                            DeviceManager.INSTANCE.getDeviceInterface().silenceInstallApk(downloadFileInfo.getLocalUri());
+                            Lztek.create(MainActivity.this).installApplication(downloadFileInfo.getLocalUri());
+                        }
+                    })
+                    .setRightNavTxt("取消")
+                    .setRightNavClickListener(new CommonAlertDialogFragment.OnSweetClickListener() {
+                        @Override
+                        public void onClick(CommonAlertDialogFragment alertDialogFragment) {
+                            alertDialogFragment.dismiss();
+                        }
+                    });
+            commonAlertDialogFragment.show(MainActivity.this);
+        }
+    }
+
     public static class MinuteReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1064,4 +1135,8 @@ public class MainActivity extends BaseActivity implements AppNetCallback, Consum
         }
         return null;
     }
+
+
+
+
 }
