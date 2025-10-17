@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
+import com.lztek.toolkit.Lztek;
 import com.stkj.aoxin.weight.AppApplication;
 import com.stkj.aoxin.weight.base.net.AppNetManager;
 import com.stkj.aoxin.weight.base.net.ParamsUtils;
@@ -100,12 +101,7 @@ public class LoginLandActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_land);
-        View decorView = getWindow().getDecorView();
-        int flags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION  // 隐藏导航栏
-                | View.SYSTEM_UI_FLAG_FULLSCREEN       // 隐藏状态栏
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY; // 沉浸式（滑动边缘临时显示）
-        decorView.setSystemUiVisibility(flags);
-
+        Lztek.create(this).hideNavigationBar();
         initViews();
         setupClickListeners();
         AppNetManager.INSTANCE.initAppNet();
