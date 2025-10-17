@@ -338,6 +338,7 @@ public class OrderActivity extends BaseActivity {
 
         if (NetworkUtils.isConnected()){
             showLoadingDialog("复核中", "Laoding");
+
             uploadPhotos();
         } else {
 
@@ -377,6 +378,7 @@ public class OrderActivity extends BaseActivity {
                     @Override
                     public void onSuccess(File file) {
                         // 压缩成功，直接上传压缩后的文件
+                        Log.d(TAG, "limeLuban: " + 380);
                         uploadCompressedImage(position, file);
                     }
 
@@ -429,21 +431,26 @@ public class OrderActivity extends BaseActivity {
 
     private void uploadPhotos() {
 
+        try {
+            Log.i(TAG, "limeLuban  435:  " + supplyProductOrderDetailList.size());
+            for (int i = 0; i < supplyProductOrderDetailList.size(); i++) {
+                Log.i(TAG, "limeLuban: --------  " + JSON.toJSONString(supplyProductOrderDetailList.get(i)));
+                if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getReviewImageUrl()) && !supplyProductOrderDetailList.get(i).getReviewImageUrl().equals("--")) {
+                    totalCount += 1;
+                    handlePhotoProduct(i);
+                    Log.d(TAG, "limeLuban: ===========" + 439);
+                }
 
-        for (int i = 0; i < supplyProductOrderDetailList.size(); i++) {
-
-            if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getReviewImageUrl()) && !supplyProductOrderDetailList.get(i).getReviewImageUrl().equals("--")) {
-                totalCount += 1;
-                handlePhotoProduct(i);
+                if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getPassImageUrl()) && !supplyProductOrderDetailList.get(i).getPassImageUrl().equals("--")) {
+                    totalCount += 1;
+                    handlePhotoPackage(i);
+                    Log.i(TAG, "limeLuban: ==========" + 445);
+                }
 
             }
 
-            if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getPassImageUrl()) && !supplyProductOrderDetailList.get(i).getPassImageUrl().equals("--")) {
-                totalCount += 1;
-                handlePhotoPackage(i);
-
-            }
-
+        }catch (Exception e){
+            Log.e(TAG, "limeLuban: " + e.getMessage());
         }
 
 

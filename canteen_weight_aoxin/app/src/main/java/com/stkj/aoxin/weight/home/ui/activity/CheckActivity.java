@@ -2816,9 +2816,9 @@ public class CheckActivity extends BaseActivity {
         } catch (Exception e) {
 
         }
-        if (supplyProductOrderDetailList != null){
-            supplyProductOrderDetailList.clear();
-        }
+//        if (supplyProductOrderDetailList != null){
+//            supplyProductOrderDetailList.clear();
+//        }
     }
 
     @Override

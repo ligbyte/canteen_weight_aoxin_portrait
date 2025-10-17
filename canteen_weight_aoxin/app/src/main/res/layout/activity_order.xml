@@ -85,12 +85,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#BB000000"
+        android:elevation="@dimen/dp_11"
         android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rl_back"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30"
+            android:layout_height="@dimen/dp_33"
             android:background="@color/white"
             android:layout_alignParentTop="true"
             android:paddingLeft="@dimen/dp_16"
@@ -98,8 +99,8 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="@dimen/dp_10"
-                android:layout_height="@dimen/dp_10"
+                android:layout_width="@dimen/dp_13"
+                android:layout_height="@dimen/dp_13"
                 android:layout_centerVertical="true"
                 android:scaleType="centerInside"
                 android:src="@mipmap/ic_order_back"/>
@@ -112,7 +113,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/iv_back"
                 android:paddingLeft="@dimen/dp_2"
-                android:textSize="20sp"
+                android:textSize="@dimen/sp_10"
                 android:text="返回"
                 android:textColor="@color/black"/>
 
@@ -124,7 +125,7 @@
             android:layout_centerInParent="true"
             android:text="图片预览"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_10"
             android:layout_marginBottom="16dp" />
 
         </RelativeLayout>
