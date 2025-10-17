@@ -4,20 +4,23 @@
     android:id="@+id/fl_pay_second_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@null">
 
 
     <com.stkj.aoxin.weight.base.ui.widget.AppSmartRefreshLayout
         android:id="@+id/srl_record_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@null"
         android:layout_alignParentTop="true">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
+            android:background="@null"
+            android:layout_marginRight="@dimen/dp_10"
+            android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </com.stkj.aoxin.weight.base.ui.widget.AppSmartRefreshLayout>

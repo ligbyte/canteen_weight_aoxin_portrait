@@ -1,7 +1,6 @@
 package com.stkj.aoxin.weight.home.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,14 +13,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,9 +49,6 @@ import com.stkj.aoxin.weight.pay.model.TTSSpeakEvent;
 import com.stkj.aoxin.weight.pay.service.PayService;
 import com.stkj.aoxin.weight.pay.ui.weight.HandCalculator;
 import com.stkj.aoxin.weight.utils.OccurrenceConverter;
-import com.stkj.aoxin.weight.weight.Weight;
-import com.stkj.aoxin.weight.weight.WeightCallback;
-import com.stkj.aoxin.weight.weight.WeightUtils;
 import com.stkj.common.glide.GlideApp;
 import com.stkj.common.net.retrofit.RetrofitManager;
 import com.stkj.common.rx.AutoDisposeUtils;
@@ -64,6 +58,7 @@ import com.stkj.common.ui.activity.BaseActivity;
 import com.stkj.common.ui.toast.AppToast;
 import com.stkj.common.ui.widget.common.RoundImageView;
 import com.stkj.common.ui.widget.shapelayout.ShapeLinearLayout;
+import com.stkj.common.utils.ConvertUtils;
 import com.stkj.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -78,6 +73,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
+
+import tp.xmaihh.serialport.SerialHelper;
+import tp.xmaihh.serialport.bean.ComBean;
 
 public class CheckActivity extends BaseActivity {
 
@@ -188,6 +186,11 @@ public class CheckActivity extends BaseActivity {
     private HandCalculator handCalculator;
 
     // 数据变量
+
+    private long beforeTimes = 0L;
+
+    private SerialHelper serialHelper;
+
     private double orderWeight = 0.00; // 订单重量
     private double grossWeight = 0.00; // 复核毛重
     private double tareWeight = 0.00; // 复核皮重
@@ -203,6 +206,7 @@ public class CheckActivity extends BaseActivity {
     private DecimalFormat amountFormat = new DecimalFormat("0.00");
     private Uri photoUri;
     private File photoFile;
+
 
     public static int currentIndex = 0;
 
@@ -224,118 +228,127 @@ public class CheckActivity extends BaseActivity {
     }
 
     private void initWeightght() {
-        WeightUtils.start("/dev/ttyS0", new WeightCallback() {
+
+        try {
+
+            serialHelper = new SerialHelper("/dev/ttyS0", 9600) {
             @Override
-            public void callback(final Weight weight, final String cache) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        String pattern = "重量:%.3f    皮重:%.3f    稳定:%s    皮重:%s    零位:%s";
-//                        if (weight != null) {
-//                            String text = String.format(
-//                                    pattern,
-//                                    weight.netWeight,
-//                                    weight.tareWeight,
-//                                    weight.stabled ? "是" : "否",
-//                                    weight.netFlag ? "是" : "否",
-//                                    weight.zeroFlag ? "是" : "否"
-//                            );
-//                            binding.tvWeight.setText(text);
-//                        }
+            protected void onDataReceived(ComBean comBean) {
 
-                        if (System.currentTimeMillis() - netWeightTime < 100) {
-                            return  ;
-                        }
-                        netWeightTime = System.currentTimeMillis();
+                if ((System.currentTimeMillis() - beforeTimes) < 100) {
+                    //return@launch
+                    return;
+                } else {
+                    beforeTimes = System.currentTimeMillis();
+                }
 
-                        Log.d(TAG, "limerbQuantitySign: " + 224);
-                        if(rbQuantitySign.isChecked()){
-                            return;
-                        }
-                        Log.d(TAG, "limerbQuantitySign: " + 228);
-                        if (weight != null) {
-
-                            if(weight.netWeight > 0){
-
-                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl())) {
-                                    if (weight.netWeight > 149.999 ){
-                                        ll_gross_weight.setBackgroundResource(R.drawable.weight_input_red_bg);
-                                        tvGrossWeight.setText("超出称的量程");
-                                        tvGrossWeight.setTextColor(Color.parseColor("#FFFFFF"));
-                                        return;
-                                    }
-
-                                    tvGrossWeight.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier));
-                                    btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_begin);
-                                    ll_gross_weight.setBackgroundResource(R.drawable.weight_input_bg);
-                                    tvGrossWeight.setTextColor(Color.parseColor("#1D2129"));
-                                    tvReviewTareValue.setText("--" + globalUnit);
-                                    tvReviewGrossValue.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier ) + globalUnit);
-                                    return;
-                                }
-
-                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getPassImageUrl()) && rb_qupi_package.isChecked()) {
-                                    if (!supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl().equals("--")) {
-                                        if (weight.netWeight > 149.999 ){
-                                            ll_trae_weight.setBackgroundResource(R.drawable.weight_input_red_bg);
-                                            tvTareWeight.setText("超出称的量程");
-                                            tvTareWeight.setTextColor(Color.parseColor("#FFFFFF"));
-                                            return;
-                                        }
-
-                                            tvTareWeight.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier));
-                                            btnTakePackagePhoto.setImageResource(R.mipmap.take_photo_begin);
-                                            ll_trae_weight.setBackgroundResource(R.drawable.weight_input_bg);
-                                            tvTareWeight.setTextColor(Color.parseColor("#1D2129"));
-                                            tvReviewTareValue.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier ) + globalUnit);
-                                            calculateWeightMoney();
-                                            Log.d(TAG, "limecalculateWeightMoney: " + 260);
-                                    }
-                                }
-
-                            } else {
-
-
-                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl())) {
-                                btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_default);
-                                ll_gross_weight.setBackgroundResource(R.drawable.weight_input_blue_bg);
-                                tvGrossWeight.setText("请放置商品");
-                                tvReviewTareValue.setText("--" + globalUnit);
-                                tvReviewGrossValue.setText("--" + globalUnit);
-                                tvGrossWeight.setTextColor(Color.parseColor("#FFFFFF"));
-                                    return;
-                                }
-
-
-                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getPassImageUrl()) && rb_qupi_package.isChecked()) {
-                                    btnTakePackagePhoto.setImageResource(R.mipmap.take_photo_default);
-                                    ll_trae_weight.setBackgroundResource(R.drawable.weight_input_blue_bg);
-                                    tvTareWeight.setText("请放置包装");
-                                    tvReviewTareValue.setText("0.00" + globalUnit);
-                                    tvNetWeightDiffValue.setText("--" + globalUnit);
-                                    tvMissingAmountValue.setText("0.00元");
-                                    tvReviewAmountValue.setText("0.00元");
-                                    tvTareWeight.setTextColor(Color.parseColor("#FFFFFF"));
-                                    return;
-                                }
-
-                            }
-
-
-                        }else {
-//                            btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_default);
-//                            tvGrossWeight.setText("0.00");
-                            if (tvGrossWeight.getText().toString().trim().equals("请放置商品")){
-                                tvReviewTareValue.setText("--" + globalUnit);
-                                tvReviewGrossValue.setText("--" + globalUnit);
-                            }
-
-                        }
-                    }
-                });
-
+                String data = ConvertUtils.bytes2HexString(comBean.bRec);
+                Log.i(TAG, "limeweight =============================================  " + data);
             }
-        });
+            };
+
+            serialHelper.open();
+        } catch (Exception e) {
+
+        }
+//        WeightUtils.start("/dev/ttyS1", new WeightCallback() {
+//            @Override
+//            public void callback(final Weight weight, final String cache) {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        if (System.currentTimeMillis() - netWeightTime < 100) {
+//                            return  ;
+//                        }
+//                        netWeightTime = System.currentTimeMillis();
+//
+//                        Log.d(TAG, "limerbQuantitySign: " + 224);
+//                        if(rbQuantitySign.isChecked()){
+//                            return;
+//                        }
+//                        Log.d(TAG, "limerbQuantitySign: " + 228);
+//                        if (weight != null) {
+//
+//                            if(weight.netWeight > 0){
+//
+//                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl())) {
+//                                    if (weight.netWeight > 149.999 ){
+//                                        ll_gross_weight.setBackgroundResource(R.drawable.weight_input_red_bg);
+//                                        tvGrossWeight.setText("超出称的量程");
+//                                        tvGrossWeight.setTextColor(Color.parseColor("#FFFFFF"));
+//                                        return;
+//                                    }
+//
+//                                    tvGrossWeight.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier));
+//                                    btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_begin);
+//                                    ll_gross_weight.setBackgroundResource(R.drawable.weight_input_bg);
+//                                    tvGrossWeight.setTextColor(Color.parseColor("#1D2129"));
+//                                    tvReviewTareValue.setText("--" + globalUnit);
+//                                    tvReviewGrossValue.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier ) + globalUnit);
+//                                    return;
+//                                }
+//
+//                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getPassImageUrl()) && rb_qupi_package.isChecked()) {
+//                                    if (!supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl().equals("--")) {
+//                                        if (weight.netWeight > 149.999 ){
+//                                            ll_trae_weight.setBackgroundResource(R.drawable.weight_input_red_bg);
+//                                            tvTareWeight.setText("超出称的量程");
+//                                            tvTareWeight.setTextColor(Color.parseColor("#FFFFFF"));
+//                                            return;
+//                                        }
+//
+//                                            tvTareWeight.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier));
+//                                            btnTakePackagePhoto.setImageResource(R.mipmap.take_photo_begin);
+//                                            ll_trae_weight.setBackgroundResource(R.drawable.weight_input_bg);
+//                                            tvTareWeight.setTextColor(Color.parseColor("#1D2129"));
+//                                            tvReviewTareValue.setText(PriceUtils.formatPrice(weight.netWeight * weightMultiplier ) + globalUnit);
+//                                            calculateWeightMoney();
+//                                            Log.d(TAG, "limecalculateWeightMoney: " + 260);
+//                                    }
+//                                }
+//
+//                            } else {
+//
+//
+//                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl())) {
+//                                btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_default);
+//                                ll_gross_weight.setBackgroundResource(R.drawable.weight_input_blue_bg);
+//                                tvGrossWeight.setText("请放置商品");
+//                                tvReviewTareValue.setText("--" + globalUnit);
+//                                tvReviewGrossValue.setText("--" + globalUnit);
+//                                tvGrossWeight.setTextColor(Color.parseColor("#FFFFFF"));
+//                                    return;
+//                                }
+//
+//
+//                                if (supplyProductOrderDetailList != null && supplyProductOrderDetailList.get(currentIndex) != null && TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getPassImageUrl()) && rb_qupi_package.isChecked()) {
+//                                    btnTakePackagePhoto.setImageResource(R.mipmap.take_photo_default);
+//                                    ll_trae_weight.setBackgroundResource(R.drawable.weight_input_blue_bg);
+//                                    tvTareWeight.setText("请放置包装");
+//                                    tvReviewTareValue.setText("0.00" + globalUnit);
+//                                    tvNetWeightDiffValue.setText("--" + globalUnit);
+//                                    tvMissingAmountValue.setText("0.00元");
+//                                    tvReviewAmountValue.setText("0.00元");
+//                                    tvTareWeight.setTextColor(Color.parseColor("#FFFFFF"));
+//                                    return;
+//                                }
+//
+//                            }
+//
+//
+//                        }else {
+//                            if (tvGrossWeight.getText().toString().trim().equals("请放置商品")){
+//                                tvReviewTareValue.setText("--" + globalUnit);
+//                                tvReviewGrossValue.setText("--" + globalUnit);
+//                            }
+//
+//                        }
+//                    }
+//                });
+//
+//            }
+//        });
     }
 
     @SuppressLint("WrongViewCast")
@@ -1274,7 +1287,7 @@ public class CheckActivity extends BaseActivity {
                         public void onClick(CommonAlertDialogFragment alertDialogFragment) {
                             // TODO: 执行置零操作
                             try {
-                                WeightUtils.zero();
+//                                WeightUtils.zero();
                                 ToastUtils.toastMsgSuccess("校准成功");
                                 tvNetWeightDiffValue.setText("--" + globalUnit);
                                 tvMissingAmountValue.setText("0.00元");
@@ -1683,6 +1696,15 @@ public class CheckActivity extends BaseActivity {
     }
 
     private void showSuccessButton() {
+
+        if (!StringUtils.isNumeric(tvGrossWeight.getText().toString().trim())){
+            return;
+        }
+
+        if (TextUtils.isEmpty(supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl()) ||supplyProductOrderDetailList.get(currentIndex).getReviewImageUrl().equals("--")){
+            return;
+        }
+
         btnReturnExchange.setVisibility(View.GONE);
         btn_check_ruku.setVisibility(View.VISIBLE);
         btn_check_use.setVisibility(View.VISIBLE);
@@ -1898,7 +1920,14 @@ public class CheckActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        WeightUtils.stop();
+        try {
+            if (serialHelper != null) {
+                serialHelper.close();
+            }
+        } catch (Exception e) {
+
+        }
+
     }
 
     @Override

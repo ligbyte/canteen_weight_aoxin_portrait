@@ -110,6 +110,12 @@ public class LoginLandActivity extends AppCompatActivity {
         setupClickListeners();
         AppNetManager.INSTANCE.initAppNet();
         startChecking();
+
+        Intent intent = new Intent("com.lztek.tools.action.BOOT_SETUP");
+        intent.putExtra("packageName", "com.stkj.aoxin.weight");
+        intent.putExtra("delaySeconds", 1);
+        intent.setPackage("com.lztek.bootmaster.autoboot7");
+        sendBroadcast(intent);
     }
     
     private void initViews() {

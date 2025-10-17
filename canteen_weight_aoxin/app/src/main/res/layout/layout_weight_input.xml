@@ -62,7 +62,10 @@
         android:id="@+id/tv_reweight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dp_5"
+        android:layout_marginVertical="@dimen/dp_3"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_3"
+        android:background="@drawable/button_reweight_bg"
         android:text="@string/reweight"
         android:textSize="@dimen/sp_8"
         android:textColor="@color/text_blue"
@@ -132,40 +135,49 @@
         android:id="@+id/radioGroupQuPi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dp_8"
+        android:layout_marginVertical="@dimen/dp_5"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp_0">
 
-        <RadioButton
-            android:id="@+id/rb_qupi_package"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:layout_marginEnd="32dp"
-            android:text="整装去皮"
-            android:textColor="@color/radio_text_color"
-            android:textSize="@dimen/sp_9" />
+
 
         <RadioButton
             android:id="@+id/rb_qupi_shoudong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingVertical="@dimen/dp_3"
+            android:background="@drawable/radio_bg_color"
             android:button="@null"
             android:text="手动去皮"
             android:textColor="@color/radio_text_color"
-            android:textSize="@dimen/sp_9" />
+            android:textSize="@dimen/sp_8" />
 
         <RadioButton
             android:id="@+id/rb_qupi_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="32dp"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingVertical="@dimen/dp_3"
+            android:background="@drawable/radio_bg_color"
             android:button="@null"
             android:text="免皮重"
             android:textColor="@color/radio_text_color"
-            android:textSize="@dimen/sp_9" />
+            android:textSize="@dimen/sp_8" />
 
+        <RadioButton
+            android:id="@+id/rb_qupi_package"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingVertical="@dimen/dp_3"
+            android:background="@drawable/radio_bg_color"
+            android:text="整装去皮"
+            android:textColor="@color/radio_text_color"
+            android:textSize="@dimen/sp_8" />
 
 
     </RadioGroup>

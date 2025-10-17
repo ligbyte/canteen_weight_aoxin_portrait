@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@null"
     android:screenOrientation="landscape">
 
     <!-- Left Side - Scale Display -->
@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@color/white">
+        android:background="@null">
 
         <!-- Scale Circle Container -->
         <FrameLayout
@@ -233,7 +233,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="30dp"
-        android:background="@color/keypad_background">
+        android:background="@null">
 
         <!-- Price Display Section -->
         <LinearLayout

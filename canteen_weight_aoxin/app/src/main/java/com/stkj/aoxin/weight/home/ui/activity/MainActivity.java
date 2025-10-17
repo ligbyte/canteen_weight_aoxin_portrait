@@ -1,8 +1,7 @@
 package com.stkj.aoxin.weight.home.ui.activity;
 
 
-import static com.stkj.aoxin.weight.home.helper.SystemEventHelper2.WIFI_NET_TYPE;
-
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -11,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -19,12 +19,10 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.wifi.WifiManager;
-import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -34,6 +32,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -41,7 +41,6 @@ import com.alibaba.fastjson.JSON;
 import com.stkj.aoxin.weight.home.helper.HeartBeatHelper;
 import com.stkj.aoxin.weight.login.helper.LoginHelper;
 import com.stkj.aoxin.weight.pay.model.InitWeightEvent;
-import com.stkj.aoxin.weight.weight.WeightUtils;
 import com.stkj.common.core.AppManager;
 import com.stkj.common.core.CountDownHelper;
 import com.stkj.common.glide.GlideApp;
@@ -54,7 +53,6 @@ import com.stkj.common.ui.toast.AppToast;
 import com.stkj.common.ui.widget.common.CircleImageView;
 import com.stkj.common.utils.ActivityUtils;
 import com.stkj.common.utils.AndroidUtils;
-import com.stkj.common.utils.CollectUtils;
 import com.stkj.common.utils.FileUtils;
 import com.stkj.common.utils.KeyBoardUtils;
 import com.stkj.common.utils.NetworkUtils;
@@ -95,7 +93,6 @@ import com.stkj.aoxin.weight.pay.model.BindFragmentSwitchEvent;
 import com.stkj.aoxin.weight.pay.model.TTSSpeakEvent;
 import com.stkj.aoxin.weight.setting.data.ServerSettingMMKV;
 import com.stkj.aoxin.weight.setting.helper.AppUpgradeHelper;
-import com.stkj.aoxin.weight.setting.helper.StoreInfoHelper;
 import com.stkj.aoxin.weight.setting.model.FoodInfoTable;
 
 import org.greenrobot.eventbus.EventBus;
@@ -117,7 +114,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MainActivity extends BaseActivity implements AppNetCallback, ConsumerListener,SystemEventWatcherHelper.OnSystemEventListener {
 
     public final static String TAG = "MainActivity";
-    public final static String WEIGHT_SERIAL_PATH = "/dev/ttyS0";
     //当前TAB界面
     private static final String TAB_CURRENT_PAGE = "currentTabPage";
     private View scanHolderView;
@@ -240,8 +236,23 @@ public class MainActivity extends BaseActivity implements AppNetCallback, Consum
         initApp();
         LogHelper.print("-main--getDisplayMetrics--" + getResources().getDisplayMetrics());
 
+        checkCameraPermission();
+
+
     }
 
+
+    /**
+     * 检查并申请相机权限
+     */
+    private void checkCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    1001);
+        }
+    }
     private void initFoodInfoTableDao() {
 
         AppGreenDaoOpenHelper daoOpenHelper = new AppGreenDaoOpenHelper(AppManager.INSTANCE.getApplication(), GreenDBConstants.FACE_DB_NAME, null);
@@ -568,9 +579,9 @@ public class MainActivity extends BaseActivity implements AppNetCallback, Consum
                     homeTabPageAdapter.createFragment(position);
 
                     if (position != 2){
-                        WeightUtils.stop();
+                        EventBus.getDefault().post(new InitWeightEvent(0));
                     }else {
-                        EventBus.getDefault().post(new InitWeightEvent());
+                        EventBus.getDefault().post(new InitWeightEvent(1));
                     }
 
 //                }

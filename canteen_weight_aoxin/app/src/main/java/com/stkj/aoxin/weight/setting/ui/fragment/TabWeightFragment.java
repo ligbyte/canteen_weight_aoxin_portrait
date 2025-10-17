@@ -1,9 +1,7 @@
 package com.stkj.aoxin.weight.setting.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,18 +9,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stkj.aoxin.weight.R;
-import com.stkj.aoxin.weight.base.utils.PriceUtils;
-import com.stkj.aoxin.weight.home.ui.activity.LoginLandActivity;
-import com.stkj.aoxin.weight.home.ui.activity.MainActivity;
+import com.stkj.aoxin.weight.base.utils.EventBusUtils;
 import com.stkj.aoxin.weight.home.ui.activity.WeightCalibrationActivity;
 import com.stkj.aoxin.weight.home.ui.widget.ScaleDashboardView;
 import com.stkj.aoxin.weight.machine.utils.ToastUtils;
-import com.stkj.aoxin.weight.pay.model.BindFragmentSwitchEvent;
 import com.stkj.aoxin.weight.pay.model.InitWeightEvent;
-import com.stkj.aoxin.weight.weight.Weight;
-import com.stkj.aoxin.weight.weight.WeightCallback;
-import com.stkj.aoxin.weight.weight.WeightUtils;
 import com.stkj.common.ui.fragment.BaseRecyclerFragment;
+import com.stkj.common.utils.ConvertUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -31,13 +24,20 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Random;
 
+import tp.xmaihh.serialport.SerialHelper;
+import tp.xmaihh.serialport.bean.ComBean;
+
 /**
  * 称重页面
  */
 public class TabWeightFragment extends BaseRecyclerFragment {
     
     private static final String TAG = "TabWeightFragment";
-    
+
+
+    private long beforeTimes = 0L;
+    private SerialHelper serialHelper;
+
     // UI Components
     private TextView tvWeightDisplay;
     private TextView tvTareWeight;
@@ -92,10 +92,12 @@ public class TabWeightFragment extends BaseRecyclerFragment {
 
     @Override
     protected void initViews(View rootView) {
+        EventBusUtils.registerEventBus(this);
         initializeViews();
         setupEventListeners();
         //startWeightSimulation();
         initWeightght();
+
     }
 
     @Override
@@ -233,90 +235,100 @@ public class TabWeightFragment extends BaseRecyclerFragment {
     }
 
     private void initWeightght() {
-        WeightUtils.start("/dev/ttyS0", new WeightCallback() {
-            @Override
-            public void callback(final Weight weight, final String cache) {
-                 getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        String pattern = "重量:%.3f    皮重:%.3f    稳定:%s    皮重:%s    零位:%s";
-//                        if (weight != null) {
-//                            String text = String.format(
-//                                    pattern,
-//                                    weight.netWeight,
-//                                    weight.tareWeight,
-//                                    weight.stabled ? "是" : "否",
-//                                    weight.netFlag ? "是" : "否",
-//                                    weight.zeroFlag ? "是" : "否"
-//                            );
-//                            binding.tvWeight.setText(text);
-//                        }
 
+        try {
+            serialHelper = new SerialHelper("/dev/ttyS0", 9600) {
+                @Override
+                protected void onDataReceived(ComBean comBean) {
 
-                        if (weight != null && !PriceUtils.formatPrice(weight.netWeight).equals(tvGrossWeight.getText().toString().trim())) {
-
-                            if (System.currentTimeMillis() - netWeightTime < 50) {
-                                return  ;
-                            }
-
-                            tareWeight = weight.tareWeight;
-
-                            if(weight.tareWeight > 0){
-                                tvTareWeight.setText(weight.tareWeight + " kg");
-                            } else {
-                                tvTareWeight.setText("0.000 kg");
-                            }
-
-                            if (weight.zeroFlag){
-                                view_zero.setBackgroundResource(R.drawable.status_circle_green);
-                            }else {
-                                view_zero.setBackgroundResource(R.drawable.status_circle_gray);
-                            }
-
-                            if (weight.stabled){
-                                view_wending.setBackgroundResource(R.drawable.status_circle_green);
-                            }else {
-                                view_wending.setBackgroundResource(R.drawable.status_circle_gray);
-                            }
-
-                            if(weight.netWeight > 0){
-
-                                netWeightTime = System.currentTimeMillis();
-
-
-
-
-                                Log.d(TAG, "limeWeight  weight.netWeight: "  + weight.netWeight);
-                                Log.d(TAG, "limeWeight  weight.tareWeight: "  + weight.tareWeight);
-                                Log.d(TAG, "limeWeight  weight.zeroFlag: "  + weight.zeroFlag);
-
-                                currentWeight = weight.netWeight;
-
-
-                                updateWeightDisplays();
-                                updateNeedlePosition();
-                                calculateTotalPrice();
-
-
-
-                            } else {
-                                currentWeight = 0.00;
-                                updateWeightDisplays();
-                                updateNeedlePosition();
-                                calculateTotalPrice();
-                            }
-
-
-                        }else {
-//                            btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_default);
-//                            tvGrossWeight.setText("0.00");
-
-                        }
+                    if ((System.currentTimeMillis() - beforeTimes) < 100) {
+                        //return@launch
+                        return;
+                    } else {
+                        beforeTimes = System.currentTimeMillis();
                     }
-                });
 
-            }
-        });
+                    String data = ConvertUtils.bytes2HexString(comBean.bRec);
+                    Log.i(TAG, "limeweight =============================================  " + data);
+                }
+            };
+
+            serialHelper.open();
+        } catch (Exception e) {
+
+        }
+
+//        WeightUtils.start("/dev/ttyS1", new WeightCallback() {
+//            @Override
+//            public void callback(final Weight weight, final String cache) {
+//                 getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        if (weight != null && !PriceUtils.formatPrice(weight.netWeight).equals(tvGrossWeight.getText().toString().trim())) {
+//
+//                            if (System.currentTimeMillis() - netWeightTime < 50) {
+//                                return  ;
+//                            }
+//
+//                            tareWeight = weight.tareWeight;
+//
+//                            if(weight.tareWeight > 0){
+//                                tvTareWeight.setText(weight.tareWeight + " kg");
+//                            } else {
+//                                tvTareWeight.setText("0.000 kg");
+//                            }
+//
+//                            if (weight.zeroFlag){
+//                                view_zero.setBackgroundResource(R.drawable.status_circle_green);
+//                            }else {
+//                                view_zero.setBackgroundResource(R.drawable.status_circle_gray);
+//                            }
+//
+//                            if (weight.stabled){
+//                                view_wending.setBackgroundResource(R.drawable.status_circle_green);
+//                            }else {
+//                                view_wending.setBackgroundResource(R.drawable.status_circle_gray);
+//                            }
+//
+//                            if(weight.netWeight > 0){
+//
+//                                netWeightTime = System.currentTimeMillis();
+//
+//
+//
+//
+//                                Log.d(TAG, "limeWeight  weight.netWeight: "  + weight.netWeight);
+//                                Log.d(TAG, "limeWeight  weight.tareWeight: "  + weight.tareWeight);
+//                                Log.d(TAG, "limeWeight  weight.zeroFlag: "  + weight.zeroFlag);
+//
+//                                currentWeight = weight.netWeight;
+//
+//
+//                                updateWeightDisplays();
+//                                updateNeedlePosition();
+//                                calculateTotalPrice();
+//
+//
+//
+//                            } else {
+//                                currentWeight = 0.00;
+//                                updateWeightDisplays();
+//                                updateNeedlePosition();
+//                                calculateTotalPrice();
+//                            }
+//
+//
+//                        }else {
+////                            btnTakeProductPhoto.setImageResource(R.mipmap.take_photo_default);
+////                            tvGrossWeight.setText("0.00");
+//
+//                        }
+//                    }
+//                });
+//
+//            }
+//        });
     }
 
     private void stopWeightSimulation() {
@@ -362,18 +374,18 @@ public class TabWeightFragment extends BaseRecyclerFragment {
     private void performTare() {
         // Set tare weight to current net weight (this will make net weight show as 0)
         try {
-            WeightUtils.tare();
+//            WeightUtils.tare();
             ToastUtils.toastMsgSuccess("去皮成功");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void performZero() {
         try {
-            WeightUtils.zero();
+//            WeightUtils.zero();
             ToastUtils.toastMsgSuccess("置零成功");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -574,13 +586,31 @@ public class TabWeightFragment extends BaseRecyclerFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInitWeightEvent(InitWeightEvent eventBus) {
-        WeightUtils.stop();
-        initWeightght();
+        try {
+            if (serialHelper != null) {
+                serialHelper.close();
+            }
+        } catch (Exception e) {
+
+        }
+
+        if (eventBus.getFlag() ==  1) {
+            initWeightght();
+        }
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         stopWeightSimulation();
+        try {
+            if (serialHelper != null) {
+                serialHelper.close();
+            }
+        } catch (Exception e) {
+
+        }
+        EventBusUtils.unRegisterEventBus(this);
     }
 }
