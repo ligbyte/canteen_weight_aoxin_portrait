@@ -142,7 +142,8 @@ public class OrderActivity extends BaseActivity {
     @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
-
+        ToastUtils.toastMsgWarning("不可返回");
+        EventBus.getDefault().post(new TTSSpeakEvent("不可返回"));
     }
 
     private void initViews() {
