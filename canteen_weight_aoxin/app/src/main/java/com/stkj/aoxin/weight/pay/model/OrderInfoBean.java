@@ -245,6 +245,8 @@ public class OrderInfoBean {
         private int unitPrice;
         private double purchaseNumber;
         private int orderFee;
+
+        private int quPiType = -1;
         private double reviewNumber;
         private double reviewFee;
         private String reviewImageUrl;
@@ -255,12 +257,37 @@ public class OrderInfoBean {
 
         private String productBranch;
 
+        public int getQuPiType() {
+            return quPiType;
+        }
+
+        public void setQuPiType(int quPiType) {
+            this.quPiType = quPiType;
+        }
+
+        /**
+         * 最后一次皮重
+         */
+        private double lastTareWeight;
+
+        /**
+         * 最后一次毛重
+         */
+        private double lastGrossWeight;
+
+        /**
+         * 毛重、皮重列表
+         */
+        private String supplyProductOrderDetailList;
+
         /**
          * 皮重
          */
         private double tareWeight;
 
-
+        /**
+         * 毛重
+         */
         private double grossWeight;
 
         /**
@@ -279,7 +306,7 @@ public class OrderInfoBean {
         /**
          * 签收类型
          */
-        private double checkType = 0;
+        private int checkType = 0;
 
         public double getGrossWeight() {
             return grossWeight;
@@ -297,11 +324,11 @@ public class OrderInfoBean {
             this.pricingUnit = pricingUnit;
         }
 
-        public double getCheckType() {
+        public int getCheckType() {
             return checkType;
         }
 
-        public void setCheckType(double checkType) {
+        public void setCheckType(int checkType) {
             this.checkType = checkType;
         }
 
@@ -478,6 +505,30 @@ public class OrderInfoBean {
 
         public void setProductBranch(String productBranch) {
             this.productBranch = productBranch;
+        }
+
+        public double getLastTareWeight() {
+            return lastTareWeight;
+        }
+
+        public void setLastTareWeight(double lastTareWeight) {
+            this.lastTareWeight = lastTareWeight;
+        }
+
+        public double getLastGrossWeight() {
+            return lastGrossWeight;
+        }
+
+        public void setLastGrossWeight(double lastGrossWeight) {
+            this.lastGrossWeight = lastGrossWeight;
+        }
+
+        public String getSupplyProductOrderDetailList() {
+            return supplyProductOrderDetailList;
+        }
+
+        public void setSupplyProductOrderDetailList(String supplyProductOrderDetailList) {
+            this.supplyProductOrderDetailList = supplyProductOrderDetailList;
         }
     }
 }

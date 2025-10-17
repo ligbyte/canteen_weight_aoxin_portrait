@@ -1,5 +1,6 @@
 package com.stkj.aoxin.weight.home.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import java.util.Locale;
 
 import com.alibaba.fastjson.JSON;
 import com.stkj.aoxin.weight.R;
+import com.stkj.aoxin.weight.base.data.AppCommonMMKV;
 import com.stkj.aoxin.weight.base.model.BaseNetResponse;
 import com.stkj.aoxin.weight.base.model.BaseResponse;
 import com.stkj.aoxin.weight.base.net.ParamsUtils;
@@ -135,7 +137,14 @@ public class OrderActivity extends BaseActivity {
         setupClickListeners();
         updateSummary();
     }
-    
+
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+
+    }
+
     private void initViews() {
         tvTitle = findViewById(R.id.tv_title);
         tvOrderTime = findViewById(R.id.tv_order_time);
@@ -306,8 +315,8 @@ public class OrderActivity extends BaseActivity {
         tvProductCount.setText("商品数量：" + productCount);
         tvVerifiedCount.setText("签收数量：" + productCount);
         tvReturnCount.setText("退货数量：" + 0);
-        tvOrderTotal.setText("订单金额：¥" + DECIMAL_FORMAT.format(orderTotal));
-        tvVerifiedTotal.setText("复核金额：¥" + DECIMAL_FORMAT.format(verifiedTotal));
+        tvOrderTotal.setText("订单总额：¥" + DECIMAL_FORMAT.format(orderTotal));
+        tvVerifiedTotal.setText("复核总额：¥" + DECIMAL_FORMAT.format(verifiedTotal));
         
         // Update order summary object
         orderSummary.setProductCount(productCount);
@@ -610,6 +619,11 @@ public class OrderActivity extends BaseActivity {
                         } else {
                             dismissLoadingDialog();
                             ToastUtils.toastMsgSuccess("订单复核成功");
+                            for (int i = 0; i < supplyProductOrderDetailList.size(); i++) {
+                                if (!TextUtils.isEmpty(AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(i).getId()))){
+                                    AppCommonMMKV.removeOrderData(supplyProductOrderDetailList.get(i).getId());
+                                }
+                            }
                             EventBus.getDefault().post(new OrderCheckSuccesskEvent());
                             finish();
                         }

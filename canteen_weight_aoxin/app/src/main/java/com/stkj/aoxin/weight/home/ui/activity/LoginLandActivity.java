@@ -83,7 +83,7 @@ public class LoginLandActivity extends AppCompatActivity {
     private Random random = new Random();
 
     private CountDownTimer countDownTimer;
-
+    private NetDialog netDialog;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public void startChecking() {
@@ -110,12 +110,6 @@ public class LoginLandActivity extends AppCompatActivity {
         setupClickListeners();
         AppNetManager.INSTANCE.initAppNet();
         startChecking();
-
-        Intent intent = new Intent("com.lztek.tools.action.BOOT_SETUP");
-        intent.putExtra("packageName", "com.stkj.aoxin.weight");
-        intent.putExtra("delaySeconds", 1);
-        intent.setPackage("com.lztek.bootmaster.autoboot7");
-        sendBroadcast(intent);
     }
     
     private void initViews() {
@@ -150,29 +144,8 @@ public class LoginLandActivity extends AppCompatActivity {
 
 
         if (!NetworkUtils.isConnected()) {
-            ToastUtils.toastMsgError("请连接网络");
-            NetDialog dialog = new NetDialog(this, "设备未联网，请先连接网络", "去设置");
-            dialog.setOnDialogActionListener(new NetDialog.OnDialogActionListener() {
-                @Override
-                public void onSingleButtonClicked() {
-                    Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onLeftButtonClicked() {
-                }
-
-                @Override
-                public void onRightButtonClicked() {
-                }
-
-                @Override
-                public void onDialogDismissed() {
-
-                }
-            });
-            dialog.show();
+            netCheck();
+            return;
         }
 
 
@@ -195,10 +168,6 @@ public class LoginLandActivity extends AppCompatActivity {
         // Login button
         btnLogin.setOnClickListener(v -> performLogin());
 
-//        iv_wifi.setOnClickListener(v -> {
-//            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-//            startActivity(intent);
-//        });
 
         tv_account_login.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -373,6 +342,11 @@ public class LoginLandActivity extends AppCompatActivity {
 
     private void getPhoneValidCode(String validCode,String validCodeReqNo) {
 
+        if (!NetworkUtils.isConnected()) {
+            netCheck();
+            return;
+        }
+
         if (TextUtils.isEmpty(etUsername.getText().toString().trim())) {
             ToastUtils.toastMsgWarning("用户名不能为空!");
             return;
@@ -452,6 +426,12 @@ public class LoginLandActivity extends AppCompatActivity {
         if (System.currentTimeMillis() - beforeTime < 1000){
             return;
         }
+
+        if (!NetworkUtils.isConnected()) {
+            netCheck();
+            return;
+        }
+
         beforeTime = System.currentTimeMillis();
         KeyBoardUtils.hideSoftKeyboard(getApplicationContext(), etPassword);
 
@@ -594,9 +574,43 @@ public class LoginLandActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void dismissLoadingDialog() {
         if (tipLoadDialog != null) {
             tipLoadDialog.dismiss();
+        }
+    }
+
+    private void netCheck(){
+        if (netDialog == null || !netDialog.isShowing()){
+            ToastUtils.toastMsgWarning("网络连接异常,请联网后操作");
+            EventBus.getDefault().post(new TTSSpeakEvent("网络连接异常,请联网后操作"));
+            if (netDialog !=null){
+                netDialog.dismiss();
+            }
+            netDialog = new NetDialog(this, "设备暂无网络，请检查", "去设置");
+            netDialog.setOnDialogActionListener(new NetDialog.OnDialogActionListener() {
+                @Override
+                public void onSingleButtonClicked() {
+                    Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onLeftButtonClicked() {
+                }
+
+                @Override
+                public void onRightButtonClicked() {
+                }
+
+                @Override
+                public void onDialogDismissed() {
+
+                }
+            });
+            dialog.show();
         }
     }
 }

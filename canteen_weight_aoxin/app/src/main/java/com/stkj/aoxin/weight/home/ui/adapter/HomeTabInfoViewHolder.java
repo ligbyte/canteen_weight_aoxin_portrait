@@ -53,7 +53,7 @@ public class HomeTabInfoViewHolder extends CommonRecyclerViewHolder<HomeTabInfo>
             sllTab.setRadius(0);
 //            sllTab.setSolidColor(Color.TRANSPARENT);
             ivTabIcon.setImageResource(data.getUnSelectRes());
-            tvTabName.setTextColor(mContext.getColor(R.color.color_171717));
+            tvTabName.setTextColor(mContext.getColor(R.color.color_999999));
         }
         mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

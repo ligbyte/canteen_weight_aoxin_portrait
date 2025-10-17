@@ -1,6 +1,8 @@
 package com.stkj.aoxin.weight.home.ui.activity;
 
 
+import static com.stkj.aoxin.weight.home.helper.SystemEventHelper2.WIFI_NET_TYPE;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,10 +21,12 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.wifi.WifiManager;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -53,6 +57,7 @@ import com.stkj.common.ui.toast.AppToast;
 import com.stkj.common.ui.widget.common.CircleImageView;
 import com.stkj.common.utils.ActivityUtils;
 import com.stkj.common.utils.AndroidUtils;
+import com.stkj.common.utils.CollectUtils;
 import com.stkj.common.utils.FileUtils;
 import com.stkj.common.utils.KeyBoardUtils;
 import com.stkj.common.utils.NetworkUtils;
@@ -93,6 +98,7 @@ import com.stkj.aoxin.weight.pay.model.BindFragmentSwitchEvent;
 import com.stkj.aoxin.weight.pay.model.TTSSpeakEvent;
 import com.stkj.aoxin.weight.setting.data.ServerSettingMMKV;
 import com.stkj.aoxin.weight.setting.helper.AppUpgradeHelper;
+import com.stkj.aoxin.weight.setting.helper.StoreInfoHelper;
 import com.stkj.aoxin.weight.setting.model.FoodInfoTable;
 
 import org.greenrobot.eventbus.EventBus;

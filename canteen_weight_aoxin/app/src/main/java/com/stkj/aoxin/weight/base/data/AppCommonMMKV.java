@@ -19,6 +19,23 @@ public class AppCommonMMKV {
         return serverSettingMMKV.decodeBool(KEY_HAS_ADD_SHUT_CUT, false);
     }
 
+
+    public static void putOrderData(String key,String value) {
+        MMKV settingMMKV = getSettingMMKV();
+        settingMMKV.putString(key, value);
+    }
+
+    public static String getOrderData(String key) {
+        MMKV serverSettingMMKV = getSettingMMKV();
+        return serverSettingMMKV.decodeString(key);
+    }
+
+    public static void removeOrderData(String key) {
+        MMKV serverSettingMMKV = getSettingMMKV();
+        serverSettingMMKV.remove(key);
+    }
+
+
     public static MMKV getSettingMMKV() {
         return MMKV.mmkvWithID(MMKV_NAME);
     }

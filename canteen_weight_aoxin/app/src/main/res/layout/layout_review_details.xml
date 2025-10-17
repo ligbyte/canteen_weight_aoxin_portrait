@@ -271,6 +271,48 @@
 
         </LinearLayout>
 
+    <!-- 底部操作按钮 -->
+    <LinearLayout
+        android:id="@+id/ll_complete_check"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:layout_gravity="bottom|center_horizontal"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:elevation="4dp"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next_weight"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_25"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:text="继续称重"
+            android:textSize="@dimen/sp_9"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_blue_selector"
+            android:visibility="gone"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_new_check"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_25"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:text="重新签收"
+            android:textSize="@dimen/sp_9"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_blue_selector" />
+
+
+    </LinearLayout>
 </com.stkj.common.ui.widget.shapelayout.ShapeLinearLayout>
 
 </com.stkj.common.ui.widget.shapelayout.ShapeFrameLayout>

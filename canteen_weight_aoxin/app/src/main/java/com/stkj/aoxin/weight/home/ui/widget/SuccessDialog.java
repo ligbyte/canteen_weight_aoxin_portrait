@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class SuccessDialog extends Dialog {
+
+    private boolean needCountdown = true;
     private TextView tvCountdown;
     private TextView tvTitle;
     private AppCompatButton btnSingle;
@@ -45,7 +47,13 @@ public class SuccessDialog extends Dialog {
         super(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         initDialog(title, leftButtonText, rightButtonText);
     }
-    
+
+    public SuccessDialog(@NonNull Context context, boolean needCountdown,String title, String leftButtonText, String rightButtonText) {
+        super(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        this.needCountdown = needCountdown;
+        initDialog(title, leftButtonText, rightButtonText);
+    }
+
     // Static factory method for double button without title
     public static SuccessDialog createWithTwoButtons(@NonNull Context context, String leftButtonText, String rightButtonText) {
         SuccessDialog dialog = new SuccessDialog(context, "");
@@ -85,9 +93,13 @@ public class SuccessDialog extends Dialog {
         btnRight = dialogView.findViewById(R.id.btn_right);
         
         // Set initial countdown text
-        tvCountdown.setText("5s");
-        tvCountdown.setVisibility(View.VISIBLE);
-        
+        if (needCountdown) {
+            tvCountdown.setText("5s");
+            tvCountdown.setVisibility(View.VISIBLE);
+        }else {
+            tvCountdown.setVisibility(View.INVISIBLE);
+        }
+
         // Configure title
         if (title != null && !title.trim().isEmpty()) {
             tvTitle.setText(title);
@@ -141,7 +153,10 @@ public class SuccessDialog extends Dialog {
         }
         
         // Start countdown with a small delay
-        tvCountdown.postDelayed(this::startCountdown, 100);
+        if (needCountdown) {
+            tvCountdown.postDelayed(this::startCountdown, 100);
+        }
+
     }
     
     private void startCountdown() {
