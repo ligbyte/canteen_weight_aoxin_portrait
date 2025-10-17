@@ -21,7 +21,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "canteen_weight_aoxin"
+rootProject.name = "canteen_weight_aoxin_portrait"
 include ':app'
 include ':common'
 project(':common').projectDir = new File('../common')
