@@ -81,7 +81,7 @@ public class ScaleDashboardView extends View {
         // Initialize colors from resources
         scaleGreen = ContextCompat.getColor(getContext(), R.color.scale_green);
         scaleDarkGreen = ContextCompat.getColor(getContext(), R.color.scale_dark_green);
-        backgroundColor = ContextCompat.getColor(getContext(), R.color.white);
+        backgroundColor = ContextCompat.getColor(getContext(), R.color.transparent);
         textColor = ContextCompat.getColor(getContext(), R.color.black);
         
         // Initialize paint objects
