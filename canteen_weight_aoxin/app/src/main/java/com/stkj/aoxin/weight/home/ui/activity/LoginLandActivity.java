@@ -317,7 +317,9 @@ public class LoginLandActivity extends AppCompatActivity {
 
                                 }
                             });
-                            dialog.show();
+                            if (dialog != null) {
+                                dialog.show();
+                            }
 
                         }
 
