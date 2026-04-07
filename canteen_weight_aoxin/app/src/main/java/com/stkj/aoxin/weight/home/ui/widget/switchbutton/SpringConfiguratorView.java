@@ -36,6 +36,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 
+import com.stkj.aoxin.weight.base.utils.PriceUtils;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -274,7 +276,7 @@ public class SpringConfiguratorView extends FrameLayout {
         float scaledTension = ((val) * tensionRange) / MAX_SEEKBAR_VAL + MIN_TENSION;
         mSelectedSpringConfig.tension =
             OrigamiValueConverter.tensionFromOrigamiValue(scaledTension);
-        String roundedTensionLabel = DECIMAL_FORMAT.format(scaledTension);
+        String roundedTensionLabel = PriceUtils.formatPrice(scaledTension);
         mTensionLabel.setText("T:" + roundedTensionLabel);
       }
 
@@ -282,7 +284,7 @@ public class SpringConfiguratorView extends FrameLayout {
         float scaledFriction = ((val) * frictionRange) / MAX_SEEKBAR_VAL + MIN_FRICTION;
         mSelectedSpringConfig.friction =
             OrigamiValueConverter.frictionFromOrigamiValue(scaledFriction);
-        String roundedFrictionLabel = DECIMAL_FORMAT.format(scaledFriction);
+        String roundedFrictionLabel = PriceUtils.formatPrice(scaledFriction);
         mFrictionLabel.setText("F:" + roundedFrictionLabel);
       }
     }

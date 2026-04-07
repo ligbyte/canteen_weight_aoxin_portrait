@@ -67,7 +67,7 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         holder.tvProductName.setText(product.getProductName());
         holder.tvBrand.setText("品牌：" + (TextUtils.isEmpty(product.getProductBranch()) ? "--" : product.getProductBranch()));
         holder.tvQuality.setText("质量等级：" + "--");
-        holder.tvUnitPrice.setText("单价：" + DECIMAL_FORMAT.format(product.getUnitPrice()/100.0) + " 元/" + product.getPackageUnit());
+        holder.tvUnitPrice.setText("单价：" + PriceUtils.formatPrice(product.getUnitPrice()/100.0) + " 元/" + product.getPackageUnit());
         holder.tvOrigin.setText("产地：" + (TextUtils.isEmpty(product.getProductAddr()) ? "--" : product.getProductAddr()));
         holder.tvPackaging.setText("包装规格：" + product.getSpecification());
 
@@ -82,17 +82,17 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         // Set quantity and amount
 
         if (product.getPackageUnit().contains("公斤") || product.getPackageUnit().contains("斤") || product.getPackageUnit().contains("kg") || product.getPackageUnit().contains("g") || product.getPackageUnit().contains("克") || product.getPackageUnit().contains("千克")) {
-            holder.tvOrderQuantity.setText("订单重量：" + DECIMAL_FORMAT.format(product.getPurchaseNumber()) + "" + product.getPackageUnit());
-            holder.tvVerifiedQuantity.setText("复核重量：" + DECIMAL_FORMAT.format(product.getReviewNumber()) + "" + product.getPackageUnit());
+            holder.tvOrderQuantity.setText("订单重量：" + PriceUtils.formatPrice(product.getPurchaseNumber()) + "" + product.getPackageUnit());
+            holder.tvVerifiedQuantity.setText("复核重量：" + PriceUtils.formatPrice(product.getReviewNumber()) + "" + product.getPackageUnit());
         }else {
-            holder.tvOrderQuantity.setText("订单数量：" + DECIMAL_FORMAT.format(product.getPurchaseNumber()) + "" + product.getPackageUnit());
-            holder.tvVerifiedQuantity.setText("复核数量：" + DECIMAL_FORMAT.format(product.getReviewNumber()) + "" + product.getPackageUnit());
+            holder.tvOrderQuantity.setText("订单数量：" + PriceUtils.formatPrice(product.getPurchaseNumber()) + "" + product.getPackageUnit());
+            holder.tvVerifiedQuantity.setText("复核数量：" + PriceUtils.formatPrice(product.getReviewNumber()) + "" + product.getPackageUnit());
         }
 
 
 
 
-        holder.tvOrderAmount.setText("订单金额：¥" + DECIMAL_FORMAT.format(product.getOrderFee() / 100.0));
+        holder.tvOrderAmount.setText("订单金额：¥" + PriceUtils.formatPrice(product.getOrderFee() / 100.0));
         holder.tvVerifiedAmount.setText("复核金额：¥" + PriceUtils.formatPrice(product.getReviewFee()/100.0));
 
         // Set verified quantity and amount
@@ -100,8 +100,8 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
 //            holder.tvVerifiedQuantity.setText("复核数量：--");
 //            holder.tvVerifiedAmount.setText("复核金额：¥--");
 //        } else {
-//            holder.tvVerifiedQuantity.setText("复核数量：" + DECIMAL_FORMAT.format(product.getVerifiedQuantity()) + product.getUnit());
-//            holder.tvVerifiedAmount.setText("复核金额：¥" + DECIMAL_FORMAT.format(product.getVerifiedAmount()));
+//            holder.tvVerifiedQuantity.setText("复核数量：" + PriceUtils.formatPrice(product.getVerifiedQuantity()) + product.getUnit());
+//            holder.tvVerifiedAmount.setText("复核金额：¥" + PriceUtils.formatPrice(product.getVerifiedAmount()));
 //        }
         
         // Set photos

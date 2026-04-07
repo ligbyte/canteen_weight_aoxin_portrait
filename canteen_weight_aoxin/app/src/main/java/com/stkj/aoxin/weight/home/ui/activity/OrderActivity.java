@@ -46,6 +46,7 @@ import com.stkj.aoxin.weight.base.tts.TTSVoiceHelper;
 import com.stkj.aoxin.weight.base.ui.dialog.CommonAlertDialogFragment;
 import com.stkj.aoxin.weight.base.upload.UploadFileHelper;
 import com.stkj.aoxin.weight.base.utils.DESUtil;
+import com.stkj.aoxin.weight.base.utils.PriceUtils;
 import com.stkj.aoxin.weight.home.ui.adapter.ProductOrderAdapter;
 import com.stkj.aoxin.weight.home.ui.widget.SuccessDialog;
 import com.stkj.aoxin.weight.login.helper.LoginHelper;
@@ -316,8 +317,8 @@ public class OrderActivity extends BaseActivity {
         tvProductCount.setText("商品数量：" + productCount);
         tvVerifiedCount.setText("签收数量：" + productCount);
         tvReturnCount.setText("退货数量：" + 0);
-        tvOrderTotal.setText("订单总额：¥" + DECIMAL_FORMAT.format(orderTotal));
-        tvVerifiedTotal.setText("复核总额：¥" + DECIMAL_FORMAT.format(verifiedTotal));
+        tvOrderTotal.setText("订单总额：¥" + PriceUtils.formatPrice(orderTotal));
+        tvVerifiedTotal.setText("复核总额：¥" + PriceUtils.formatPrice(verifiedTotal));
         
         // Update order summary object
         orderSummary.setProductCount(productCount);
