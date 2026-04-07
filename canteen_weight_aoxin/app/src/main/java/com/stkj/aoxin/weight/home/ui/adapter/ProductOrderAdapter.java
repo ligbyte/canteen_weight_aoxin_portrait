@@ -13,10 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.stkj.aoxin.weight.AppApplication;
 import com.stkj.aoxin.weight.R;
+import com.stkj.aoxin.weight.base.utils.PriceUtils;
 import com.stkj.aoxin.weight.home.ui.activity.CheckActivity;
 import com.stkj.aoxin.weight.home.ui.activity.OrderActivity;
 import com.stkj.aoxin.weight.pay.model.OrderInfoBean;
+import com.stkj.common.glide.GlideApp;
 import com.stkj.common.ui.widget.common.RoundImageView;
 
 import java.text.DecimalFormat;
@@ -67,7 +70,15 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         holder.tvUnitPrice.setText("单价：" + DECIMAL_FORMAT.format(product.getUnitPrice()/100.0) + " 元/" + product.getPackageUnit());
         holder.tvOrigin.setText("产地：" + (TextUtils.isEmpty(product.getProductAddr()) ? "--" : product.getProductAddr()));
         holder.tvPackaging.setText("包装规格：" + product.getSpecification());
-        
+
+        if (TextUtils.isEmpty(product.getProductImageUrl())){
+            holder.ivProduct.setImageResource(R.mipmap.ic_cai_default);
+        } else {
+            GlideApp.with(AppApplication.instances).load(product.getProductImageUrl()).placeholder(R.mipmap.ic_cai_default)
+                    .into(holder.ivProduct);
+        }
+
+
         // Set quantity and amount
 
         if (product.getPackageUnit().contains("公斤") || product.getPackageUnit().contains("斤") || product.getPackageUnit().contains("kg") || product.getPackageUnit().contains("g") || product.getPackageUnit().contains("克") || product.getPackageUnit().contains("千克")) {
@@ -82,7 +93,7 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
 
 
         holder.tvOrderAmount.setText("订单金额：¥" + DECIMAL_FORMAT.format(product.getOrderFee() / 100.0));
-        holder.tvVerifiedAmount.setText("复核金额：¥" + DECIMAL_FORMAT.format(product.getReviewFee()));
+        holder.tvVerifiedAmount.setText("复核金额：¥" + PriceUtils.formatPrice(product.getReviewFee()/100.0));
 
         // Set verified quantity and amount
 //        if (product.isReturned()) {

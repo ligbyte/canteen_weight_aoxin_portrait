@@ -248,8 +248,9 @@ public class TabWeightFragment extends BaseRecyclerFragment {
                         beforeTimes = System.currentTimeMillis();
                     }
 
-                    String data = ConvertUtils.bytes2HexString(comBean.bRec);
-                    Log.i(TAG, "limeweight =============================================  " + data);
+                    String data = ConvertUtils.bytes2String(comBean.bRec);
+                    Log.i(TAG, "limeweight =============================================  :" + data);
+
                 }
             };
 

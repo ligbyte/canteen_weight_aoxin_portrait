@@ -389,10 +389,26 @@ public class OrderInfoBean {
         }
 
         public String getPackageUnit() {
-//            if ( TextUtils.isEmpty(packageUnit) || packageUnit.equals("kg")){
-//                return  "公斤";
-//            }
+            if (!TextUtils.isEmpty(pricingUnit)){
+                return  extractUnitBySplit(pricingUnit);
+            }
             return packageUnit;
+        }
+
+
+        public static String extractUnitBySplit(String input) {
+            if (input == null || input.isEmpty()) {
+                return "";
+            }
+
+            if (input.contains("/")) {
+                // 使用转义?号避免空指针
+                String[] parts = input.split("/");
+                if (parts.length > 1) {
+                    return parts[parts.length - 1];
+                }
+            }
+            return input;
         }
 
         public void setPackageUnit(String packageUnit) {

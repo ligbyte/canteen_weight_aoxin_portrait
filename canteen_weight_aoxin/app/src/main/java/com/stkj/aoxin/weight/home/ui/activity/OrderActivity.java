@@ -303,7 +303,7 @@ public class OrderActivity extends BaseActivity {
         
         for (OrderInfoBean.SupplyProductOrderDetailListBean product : productList) {
             orderTotal += product.getOrderFee()/100.0;
-            verifiedTotal += product.getReviewFee();
+            verifiedTotal += product.getReviewFee()/100.0;
 
 //            if (product.isReturned()) {
 //                returnCount++;
