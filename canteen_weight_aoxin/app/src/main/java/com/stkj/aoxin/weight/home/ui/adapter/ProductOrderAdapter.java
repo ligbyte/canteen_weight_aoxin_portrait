@@ -78,10 +78,9 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
                     .into(holder.ivProduct);
         }
 
-
         // Set quantity and amount
 
-        if (product.getPackageUnit().contains("公斤") || product.getPackageUnit().contains("斤") || product.getPackageUnit().contains("kg") || product.getPackageUnit().contains("g") || product.getPackageUnit().contains("克") || product.getPackageUnit().contains("千克")) {
+        if (product.getPackageUnit() != null && (product.getPackageUnit().contains("公斤") || product.getPackageUnit().contains("斤") || product.getPackageUnit().contains("kg") || product.getPackageUnit().contains("g") || product.getPackageUnit().contains("克") || product.getPackageUnit().contains("千克"))) {
             holder.tvOrderQuantity.setText("订单重量：" + PriceUtils.formatPrice(product.getPurchaseNumber()) + "" + product.getPackageUnit());
             holder.tvVerifiedQuantity.setText("复核重量：" + PriceUtils.formatPrice(product.getReviewNumber()) + "" + product.getPackageUnit());
         }else {

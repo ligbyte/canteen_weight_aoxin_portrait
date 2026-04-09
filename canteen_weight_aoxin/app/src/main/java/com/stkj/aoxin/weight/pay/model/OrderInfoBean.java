@@ -2,6 +2,8 @@ package com.stkj.aoxin.weight.pay.model;
 
 import android.text.TextUtils;
 
+import com.stkj.aoxin.weight.base.utils.PriceUtils;
+
 import java.util.List;
 
 public class OrderInfoBean {
@@ -389,12 +391,16 @@ public class OrderInfoBean {
         }
 
         public String getPackageUnit() {
+//            if ( TextUtils.isEmpty(packageUnit) || packageUnit.equals("kg")){
+//                return  "公斤";
+//            }
+
             if (!TextUtils.isEmpty(pricingUnit)){
                 return  extractUnitBySplit(pricingUnit);
             }
+
             return packageUnit;
         }
-
 
         public static String extractUnitBySplit(String input) {
             if (input == null || input.isEmpty()) {
@@ -444,7 +450,7 @@ public class OrderInfoBean {
         }
 
         public void setReviewNumber(double reviewNumber) {
-            this.reviewNumber = reviewNumber;
+            this.reviewNumber = Double.parseDouble(PriceUtils.formatPrice(reviewNumber));
         }
 
         public double getReviewFee() {
@@ -452,7 +458,7 @@ public class OrderInfoBean {
         }
 
         public void setReviewFee(double reviewFee) {
-            this.reviewFee = reviewFee;
+            this.reviewFee = PriceUtils.formatToInt(reviewFee);
         }
 
         public String getReviewImageUrl() {
@@ -495,15 +501,15 @@ public class OrderInfoBean {
         }
 
         public void setNetWeightDifference(double netWeightDifference) {
-            this.netWeightDifference = netWeightDifference;
+            this.netWeightDifference = Double.parseDouble(PriceUtils.formatPrice(netWeightDifference));
         }
 
         public double getDifferenceAmount() {
-            return differenceAmount;
+            return differenceAmount/100.0;
         }
 
         public void setDifferenceAmount(double differenceAmount) {
-            this.differenceAmount = differenceAmount;
+            this.differenceAmount = Double.parseDouble(PriceUtils.formatPrice(differenceAmount)) * 100.0;
         }
 
 

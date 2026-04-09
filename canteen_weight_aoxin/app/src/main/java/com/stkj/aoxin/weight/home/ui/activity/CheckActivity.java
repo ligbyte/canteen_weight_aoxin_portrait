@@ -995,11 +995,11 @@ public class CheckActivity extends BaseActivity {
         }
         tvNetWeightDiffValue.setText(diffTag + PriceUtils.formatPrice(diffValue) + globalUnit);
 
-        tvMissingAmountValue.setText(diffTag + PriceUtils.formatPrice(diffValue * supplyProductOrderDetailList.get(currentIndex).getUnitPrice()) + "元");
+        tvMissingAmountValue.setText(diffTag + PriceUtils.formatPrice(diffValue * supplyProductOrderDetailList.get(currentIndex).getUnitPrice()/100.0) + "元");
 
-        supplyProductOrderDetailList.get(currentIndex).setReviewFee((supplyProductOrderDetailList.get(currentIndex).getGrossWeight() - supplyProductOrderDetailList.get(currentIndex).getTareWeight()) * supplyProductOrderDetailList.get(currentIndex).getUnitPrice());
+        supplyProductOrderDetailList.get(currentIndex).setReviewFee(Double.parseDouble(PriceUtils.formatPrice((supplyProductOrderDetailList.get(currentIndex).getGrossWeight() - supplyProductOrderDetailList.get(currentIndex).getTareWeight()) * supplyProductOrderDetailList.get(currentIndex).getUnitPrice())));
         tvReviewAmountValue.setText(PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getReviewFee()/100.0) + "元");
-
+        Log.d(TAG, "limetvReviewAmountValue 984: " + (supplyProductOrderDetailList.get(currentIndex).getReviewFee()/100.0));
         if (rbMultipleWeight.isChecked()){
             AppApplication.supplyProductOrderDetailList = JSON.parseArray(supplyProductOrderDetailList.get(currentIndex).getSupplyProductOrderDetailList(),OrderInfoBean.SupplyProductOrderDetailListBean.class);
             Log.d(TAG, "limeAppCommonMMKV1 840: " + AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(currentIndex).getId()));
@@ -1630,7 +1630,7 @@ public class CheckActivity extends BaseActivity {
             }
 
 
-            if (rb_qupi_package.isChecked() && !StringUtils.isNumeric(tvTareWeight.getText().toString().trim())){
+            if (rb_qupi_package.isChecked() && !StringUtils.isNumeric(tvTareWeight.getText().toString().trim()) && (btn_new_check.getVisibility() == View.GONE)){
                 ToastUtils.toastMsgWarning("请先放置包装");
                 EventBus.getDefault().post(new TTSSpeakEvent("请先放置包装"));
                 return;
@@ -1825,7 +1825,7 @@ public class CheckActivity extends BaseActivity {
                 return;
             }
 
-            if (rb_qupi_package.isChecked() && !StringUtils.isNumeric(tvTareWeight.getText().toString().trim())){
+            if (rb_qupi_package.isChecked() && !StringUtils.isNumeric(tvTareWeight.getText().toString().trim()) && (btn_new_check.getVisibility() == View.GONE)){
                 ToastUtils.toastMsgWarning("请先放置包装");
                 EventBus.getDefault().post(new TTSSpeakEvent("请先放置包装"));
                 return;
@@ -2225,17 +2225,17 @@ public class CheckActivity extends BaseActivity {
         ToastUtils.toastMsgWarning("继续称重");
         EventBus.getDefault().post(new TTSSpeakEvent("继续称重"));
 
-        if (AppApplication.supplyProductOrderDetailList != null && AppApplication.supplyProductOrderDetailList.size() > 0){
-            ll_goods_count.setVisibility(View.VISIBLE);
-            observeGoodsCountLayout();
-            GoodsCountAdapter adapter = new GoodsCountAdapter(this);
-            rv_goods_count.setAdapter(adapter);
-            rv_goods_count.setItemAnimator(null);
-            rv_goods_count.setItemViewCacheSize(4);
-            rv_goods_count.setHasFixedSize(true);
-            adapter.addData(AppApplication.supplyProductOrderDetailList);
-            rv_goods_count.scrollToPosition(AppApplication.supplyProductOrderDetailList.size() - 1);
-        }
+          if (AppApplication.supplyProductOrderDetailList != null && AppApplication.supplyProductOrderDetailList.size() > 0){
+              ll_goods_count.setVisibility(View.VISIBLE);
+              observeGoodsCountLayout();
+              GoodsCountAdapter adapter = new GoodsCountAdapter(this);
+              rv_goods_count.setAdapter(adapter);
+              rv_goods_count.setItemAnimator(null);
+              rv_goods_count.setItemViewCacheSize(4);
+              rv_goods_count.setHasFixedSize(true);
+              adapter.addData(AppApplication.supplyProductOrderDetailList);
+              rv_goods_count.scrollToPosition(AppApplication.supplyProductOrderDetailList.size() - 1);
+          }
 
         categoryList.get(currentIndex).setStatus(1);
         categoryAdapter.notifyDataSetChanged();
@@ -2566,14 +2566,14 @@ public class CheckActivity extends BaseActivity {
 
             supplyProductOrderDetailList.get(currentIndex).setReviewNumber( supplyProductOrderDetailList.get(currentIndex).getPurchaseNumber() + missWeight);
 
-            double missMoney = missWeight * (supplyProductOrderDetailList.get(currentIndex).getUnitPrice()/100.0);
+            double missMoney = missWeight * supplyProductOrderDetailList.get(currentIndex).getUnitPrice()/100.0;
 
             if (missWeight < 0) {
-                tvMissingAmountValue.setText(PriceUtils.formatPrice(missMoney) + globalUnit);
+                tvMissingAmountValue.setText(PriceUtils.formatPrice(missMoney) + "元");
             }else if (missWeight > 0){
-                tvMissingAmountValue.setText( "+" + PriceUtils.formatPrice(missMoney) + globalUnit);
+                tvMissingAmountValue.setText( "+" + PriceUtils.formatPrice(missMoney) + "元");
             }else {
-                tvMissingAmountValue.setText("0.00" + globalUnit);
+                tvMissingAmountValue.setText("0.00" + "元");
             }
 
 
@@ -2585,9 +2585,12 @@ public class CheckActivity extends BaseActivity {
                 reviewMoney = supplyProductOrderDetailList.get(currentIndex).getOrderFee() / 100.0 - Math.abs(missMoney);
             }
 
-            tvReviewAmountValue.setText(PriceUtils.formatPrice(reviewMoney)+ "元");
 
-            supplyProductOrderDetailList.get(currentIndex).setReviewFee(reviewMoney * 100);
+            //tvReviewAmountValue.setText(PriceUtils.formatPrice(reviewMoney)+ "元");
+
+            supplyProductOrderDetailList.get(currentIndex).setReviewFee((Double.parseDouble(PriceUtils.formatPrice(reviewMoney)) * 100));
+            tvReviewAmountValue.setText(PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getReviewFee()/100.0) + "元");
+            Log.d(TAG, "limetvReviewAmountValue 2575: " + PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getReviewFee()/100.0));
 
             supplyProductOrderDetailList.get(currentIndex).setGrossWeight(grossWeight);
             supplyProductOrderDetailList.get(currentIndex).setTareWeight(tareWeight);
@@ -2797,17 +2800,17 @@ public class CheckActivity extends BaseActivity {
 
 
 
-                                supplyProductOrderDetailList = responseData.getSupplyProductOrderDetailList();
+                                    supplyProductOrderDetailList = responseData.getSupplyProductOrderDetailList();
                                 Log.d(TAG, "limeorderInfo 2761  : ");
-                                for (int i = 0; i < supplyProductOrderDetailList.size(); i++) {
-                                    if (!TextUtils.isEmpty(AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(i).getId()))){
-                                        Log.d(TAG, "limeAppCommonMMKV1: " + AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(i).getId()));
-                                        supplyProductOrderDetailList.set(i,JSON.parseObject(AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(i).getId()), OrderInfoBean.SupplyProductOrderDetailListBean.class));
-                                        categoryList.get(i).setStatus(2);
-                                        categoryAdapter.notifyItemChanged(i);
-                                        Log.i(TAG, "limeAppCommonMMKV2: " + JSON.toJSONString(supplyProductOrderDetailList.get(i)));
+                                    for (int i = 0; i < supplyProductOrderDetailList.size(); i++) {
+                                        if (!TextUtils.isEmpty(AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(i).getId()))){
+                                            Log.d(TAG, "limeAppCommonMMKV1: " + AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(i).getId()));
+                                            supplyProductOrderDetailList.set(i,JSON.parseObject(AppCommonMMKV.getOrderData(supplyProductOrderDetailList.get(i).getId()), OrderInfoBean.SupplyProductOrderDetailListBean.class));
+                                            categoryList.get(i).setStatus(2);
+                                            categoryAdapter.notifyItemChanged(i);
+                                            Log.i(TAG, "limeAppCommonMMKV2: " + JSON.toJSONString(supplyProductOrderDetailList.get(i)));
+                                        }
                                     }
-                                }
                                 Log.d(TAG, "limeorderInfo 2771  : ");
                                 int getIndex = 0;
 
@@ -3015,24 +3018,24 @@ public class CheckActivity extends BaseActivity {
 //                if (rbMultipleWeight.isChecked()) {
 //
 //                } else {
-                rbSingleWeight.setChecked(true);
-                supplyProductOrderDetailList.get(currentIndex).setCheckType(0);
-                if(packageUnit.contains("公斤") || packageUnit.contains("kg") || packageUnit.contains("千克")){
-                    if (supplyProductOrderDetailListBean.getPurchaseNumber() > 150){
-                        rbMultipleWeight.setChecked(true);
-                        supplyProductOrderDetailList.get(currentIndex).setCheckType(1);
+                    rbSingleWeight.setChecked(true);
+                    supplyProductOrderDetailList.get(currentIndex).setCheckType(0);
+                    if(packageUnit.contains("公斤") || packageUnit.contains("kg") || packageUnit.contains("千克")){
+                        if (supplyProductOrderDetailListBean.getPurchaseNumber() > 150){
+                            rbMultipleWeight.setChecked(true);
+                            supplyProductOrderDetailList.get(currentIndex).setCheckType(1);
+                        }
+                    }else if(packageUnit.contains("g") || packageUnit.contains("克")){
+                        if (supplyProductOrderDetailListBean.getPurchaseNumber() > 150000 ){
+                            rbMultipleWeight.setChecked(true);
+                            supplyProductOrderDetailList.get(currentIndex).setCheckType(1);
+                        }
+                    }else if(packageUnit.contains("斤")){
+                        if (supplyProductOrderDetailListBean.getPurchaseNumber() > 300){
+                            rbMultipleWeight.setChecked(true);
+                            supplyProductOrderDetailList.get(currentIndex).setCheckType(1);
+                        }
                     }
-                }else if(packageUnit.contains("g") || packageUnit.contains("克")){
-                    if (supplyProductOrderDetailListBean.getPurchaseNumber() > 150000 ){
-                        rbMultipleWeight.setChecked(true);
-                        supplyProductOrderDetailList.get(currentIndex).setCheckType(1);
-                    }
-                }else if(packageUnit.contains("斤")){
-                    if (supplyProductOrderDetailListBean.getPurchaseNumber() > 300){
-                        rbMultipleWeight.setChecked(true);
-                        supplyProductOrderDetailList.get(currentIndex).setCheckType(1);
-                    }
-                }
 
 
 //                }

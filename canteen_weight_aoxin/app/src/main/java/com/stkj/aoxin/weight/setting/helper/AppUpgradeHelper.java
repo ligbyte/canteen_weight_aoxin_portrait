@@ -3,6 +3,7 @@ package com.stkj.aoxin.weight.setting.helper;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,9 @@ import com.stkj.common.rx.DefaultObserver;
 import com.stkj.common.rx.RxTransformerUtils;
 import com.stkj.common.ui.fragment.BaseDialogFragment;
 import com.stkj.common.ui.toast.AppToast;
+import com.stkj.common.utils.AndroidUtils;
 
+import java.io.File;
 import java.util.TreeMap;
 
 /**
@@ -250,11 +253,19 @@ public class AppUpgradeHelper extends ActivityWeakRefHolder {
                                                     @Override
                                                     public void onClick(CommonAlertDialogFragment alertDialogFragment) {
                                                         //去静默安装
-                                                        DeviceManager.INSTANCE.getDeviceInterface().silenceInstallApk(downloadFileInfo.getLocalUri());
+                                                        if (downloadFileInfo.getLocalUri().startsWith("content:")) {
+                                                            AndroidUtils.installApk(Uri.parse(downloadFileInfo.getLocalUri()));
+                                                        } else {
+                                                            AndroidUtils.installApk(new File(downloadFileInfo.getLocalUri()));
+                                                        }
                                                     }
                                                 });
                                         //去静默安装
-                                        DeviceManager.INSTANCE.getDeviceInterface().silenceInstallApk(downloadFileInfo.getLocalUri());
+                                        if (downloadFileInfo.getLocalUri().startsWith("content:")) {
+                                            AndroidUtils.installApk(Uri.parse(downloadFileInfo.getLocalUri()));
+                                        } else {
+                                            AndroidUtils.installApk(new File(downloadFileInfo.getLocalUri()));
+                                        }
                                     }
                                 }
                             });

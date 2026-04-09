@@ -304,8 +304,9 @@ public class OrderActivity extends BaseActivity {
         
         for (OrderInfoBean.SupplyProductOrderDetailListBean product : productList) {
             orderTotal += product.getOrderFee()/100.0;
-            verifiedTotal += product.getReviewFee()/100.0;
-
+            //verifiedTotal += (product.getGrossWeight() - product.getTareWeight()) * product.getUnitPrice()/100;
+            verifiedTotal += Double.parseDouble(PriceUtils.formatPrice(product.getReviewFee()/100.0));
+            Log.d(TAG, "limeupdateSummary: " + (Double.parseDouble(PriceUtils.formatPrice(product.getReviewFee()/100.0))));
 //            if (product.isReturned()) {
 //                returnCount++;
 //            } else if (product.getVerifiedQuantity() > 0) {
@@ -318,6 +319,7 @@ public class OrderActivity extends BaseActivity {
         tvVerifiedCount.setText("签收数量：" + productCount);
         tvReturnCount.setText("退货数量：" + 0);
         tvOrderTotal.setText("订单总额：¥" + PriceUtils.formatPrice(orderTotal));
+        Log.d(TAG, "limeupdateSummary  verifiedTotal: " + verifiedTotal);
         tvVerifiedTotal.setText("复核总额：¥" + PriceUtils.formatPrice(verifiedTotal));
         
         // Update order summary object
@@ -340,7 +342,6 @@ public class OrderActivity extends BaseActivity {
 
         if (NetworkUtils.isConnected()){
             showLoadingDialog("复核中", "Laoding");
-
             uploadPhotos();
         } else {
 
@@ -380,7 +381,6 @@ public class OrderActivity extends BaseActivity {
                     @Override
                     public void onSuccess(File file) {
                         // 压缩成功，直接上传压缩后的文件
-                        Log.d(TAG, "limeLuban: " + 380);
                         uploadCompressedImage(position, file);
                     }
 
@@ -433,26 +433,21 @@ public class OrderActivity extends BaseActivity {
 
     private void uploadPhotos() {
 
-        try {
-            Log.i(TAG, "limeLuban  435:  " + supplyProductOrderDetailList.size());
-            for (int i = 0; i < supplyProductOrderDetailList.size(); i++) {
-                Log.i(TAG, "limeLuban: --------  " + JSON.toJSONString(supplyProductOrderDetailList.get(i)));
-                if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getReviewImageUrl()) && !supplyProductOrderDetailList.get(i).getReviewImageUrl().equals("--")) {
-                    totalCount += 1;
-                    handlePhotoProduct(i);
-                    Log.d(TAG, "limeLuban: ===========" + 439);
-                }
 
-                if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getPassImageUrl()) && !supplyProductOrderDetailList.get(i).getPassImageUrl().equals("--")) {
-                    totalCount += 1;
-                    handlePhotoPackage(i);
-                    Log.i(TAG, "limeLuban: ==========" + 445);
-                }
+        for (int i = 0; i < supplyProductOrderDetailList.size(); i++) {
+
+            if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getReviewImageUrl()) && !supplyProductOrderDetailList.get(i).getReviewImageUrl().equals("--")) {
+                totalCount += 1;
+                handlePhotoProduct(i);
 
             }
 
-        }catch (Exception e){
-            Log.e(TAG, "limeLuban: " + e.getMessage());
+            if (!TextUtils.isEmpty(supplyProductOrderDetailList.get(i).getPassImageUrl()) && !supplyProductOrderDetailList.get(i).getPassImageUrl().equals("--")) {
+                totalCount += 1;
+                handlePhotoPackage(i);
+
+            }
+
         }
 
 
@@ -622,7 +617,8 @@ public class OrderActivity extends BaseActivity {
                         }
 
                         if (!userInfoBaseResponse.isSuccess()) {
-                            showLoadingDialog("订单复核失败","FAIL");
+//                            showLoadingDialog("订单复核失败","FAIL");
+                            dismissLoadingDialog();
                             ToastUtils.toastMsgError(userInfoBaseResponse.getMsg());
                             return;
                         } else {
