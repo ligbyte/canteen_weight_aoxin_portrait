@@ -987,15 +987,16 @@ public class CheckActivity extends BaseActivity {
         Log.d(TAG, "limecompleteHandle getReviewNumber: " + supplyProductOrderDetailList.get(currentIndex).getReviewNumber());
         Log.d(TAG, "limecompleteHandle getOrderFee: " + supplyProductOrderDetailList.get(currentIndex).getOrderFee());
 
+        double missMoney = Double.parseDouble(PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getReviewFee()/100.0)) - Double.parseDouble(PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getOrderFee()/100.0));
         String diffTag = "";
-        if (diffValue > 0){
+        if (missMoney > 0){
             diffTag = "+";
         } else {
             diffTag = "";
         }
         tvNetWeightDiffValue.setText(diffTag + PriceUtils.formatPrice(diffValue) + globalUnit);
 
-        tvMissingAmountValue.setText(diffTag + PriceUtils.formatPrice(diffValue * supplyProductOrderDetailList.get(currentIndex).getUnitPrice()/100.0) + "元");
+        tvMissingAmountValue.setText(diffTag + PriceUtils.formatPrice(missMoney) + "元");
 
         supplyProductOrderDetailList.get(currentIndex).setReviewFee(Double.parseDouble(PriceUtils.formatPrice((supplyProductOrderDetailList.get(currentIndex).getGrossWeight() - supplyProductOrderDetailList.get(currentIndex).getTareWeight()) * supplyProductOrderDetailList.get(currentIndex).getUnitPrice())));
         tvReviewAmountValue.setText(PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getReviewFee()/100.0) + "元");
@@ -2567,16 +2568,6 @@ public class CheckActivity extends BaseActivity {
             supplyProductOrderDetailList.get(currentIndex).setReviewNumber( supplyProductOrderDetailList.get(currentIndex).getPurchaseNumber() + missWeight);
 
             double missMoney = missWeight * supplyProductOrderDetailList.get(currentIndex).getUnitPrice()/100.0;
-
-            if (missWeight < 0) {
-                tvMissingAmountValue.setText(PriceUtils.formatPrice(missMoney) + "元");
-            }else if (missWeight > 0){
-                tvMissingAmountValue.setText( "+" + PriceUtils.formatPrice(missMoney) + "元");
-            }else {
-                tvMissingAmountValue.setText("0.00" + "元");
-            }
-
-
             double reviewMoney = 0.00;
 
             if (missWeight > 0){
@@ -2597,6 +2588,16 @@ public class CheckActivity extends BaseActivity {
 
 
             supplyProductOrderDetailList.get(currentIndex).setNetWeightDifference(missWeight);
+
+
+            double missMoney2 = Double.parseDouble(PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getReviewFee()/100.0)) - Double.parseDouble(PriceUtils.formatPrice(supplyProductOrderDetailList.get(currentIndex).getOrderFee()/100.0));
+            if (missWeight < 0) {
+                tvMissingAmountValue.setText(PriceUtils.formatPrice(missMoney2) + "元");
+            }else if (missWeight > 0){
+                tvMissingAmountValue.setText( "+" + PriceUtils.formatPrice(missMoney2) + "元");
+            }else {
+                tvMissingAmountValue.setText("0.00" + "元");
+            }
 
             supplyProductOrderDetailList.get(currentIndex).setDifferenceAmount(missMoney);
 
