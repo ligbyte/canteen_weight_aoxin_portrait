@@ -50,7 +50,7 @@ public interface SettingService {
     /**
      * 检查更新
      */
-    @GET("home/v3/index")
+    @GET("home/v2/index")
     Observable<BaseNetResponse<CheckAppVersion>> checkAppVersion(@QueryMap Map<String, String> requestParams);
 
 

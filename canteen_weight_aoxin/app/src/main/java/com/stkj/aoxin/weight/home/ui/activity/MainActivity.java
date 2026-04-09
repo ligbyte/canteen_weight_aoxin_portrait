@@ -637,8 +637,8 @@ public class MainActivity extends BaseActivity implements AppNetCallback, Consum
 //        countDownHelper.addCountDownListener(systemEventWatcherHelper);
 
         //启动检查升级
-        AppUpgradeHelper appUpgradeHelper = getWeakRefHolder(AppUpgradeHelper.class);
-        appUpgradeHelper.checkAppVersion();
+//        AppUpgradeHelper appUpgradeHelper = getWeakRefHolder(AppUpgradeHelper.class);
+//        appUpgradeHelper.checkAppVersion();
         hasInitMenuData = true;
     }
 

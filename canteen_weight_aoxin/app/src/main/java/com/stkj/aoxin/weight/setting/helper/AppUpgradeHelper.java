@@ -84,7 +84,7 @@ public class AppUpgradeHelper extends ActivityWeakRefHolder {
                     @Override
                     protected void onSuccess(BaseNetResponse<CheckAppVersion> baseNetResponse) {
                         CheckAppVersion data = baseNetResponse.getData();
-                        if (baseNetResponse.isSuccess() && data != null && !TextUtils.isEmpty(data.getUrl())) {
+                        if (baseNetResponse.getCode().equals("10000") &&  data != null && !TextUtils.isEmpty(data.getUrl())) {
                             handleCheckAppVersion(data);
                         } else {
                             isCheckUpgrade = false;

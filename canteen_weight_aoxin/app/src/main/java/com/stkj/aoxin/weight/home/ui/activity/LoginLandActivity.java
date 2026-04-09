@@ -1,10 +1,12 @@
 package com.stkj.aoxin.weight.home.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -19,10 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.lztek.toolkit.Lztek;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.RequestCallback;
 import com.stkj.aoxin.weight.AppApplication;
 import com.stkj.aoxin.weight.base.net.AppNetManager;
 import com.stkj.aoxin.weight.base.net.ParamsUtils;
@@ -35,10 +40,12 @@ import com.stkj.aoxin.weight.login.model.GetPicCaptchaInfo;
 import com.stkj.aoxin.weight.machine.utils.ToastUtils;
 import com.stkj.aoxin.weight.pay.model.TTSSpeakEvent;
 import com.stkj.aoxin.weight.setting.data.PaymentSettingMMKV;
+import com.stkj.aoxin.weight.setting.helper.AppUpgradeHelper;
 import com.stkj.common.net.retrofit.RetrofitManager;
 import com.stkj.common.rx.AutoDisposeUtils;
 import com.stkj.common.rx.DefaultObserver;
 import com.stkj.common.rx.RxTransformerUtils;
+import com.stkj.common.ui.activity.BaseActivity;
 import com.stkj.common.utils.KeyBoardUtils;
 import com.stkj.aoxin.weight.R;
 import com.stkj.aoxin.weight.base.device.DeviceManager;
@@ -53,13 +60,14 @@ import com.wind.dialogtiplib.dialog_tip.TipLoadDialog;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-public class LoginLandActivity extends AppCompatActivity {
+public class LoginLandActivity extends BaseActivity {
 
     private static final String TAG = "LoginLandActivity";
     private EditText etUsername, etPassword, etCaptcha;
@@ -106,8 +114,32 @@ public class LoginLandActivity extends AppCompatActivity {
         setupClickListeners();
         AppNetManager.INSTANCE.initAppNet();
         startChecking();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initData();
+            }
+        },1000);
     }
-    
+
+
+    private void initData() {
+        PermissionX.init(LoginLandActivity.this)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request(new RequestCallback() {
+                    @Override
+                    public void onResult(boolean allGranted, @NonNull List<String> grantedList, @NonNull List<String> deniedList) {
+
+                        if (allGranted) {
+                            AppUpgradeHelper appUpgradeHelper = getWeakRefHolder(AppUpgradeHelper.class);
+                            appUpgradeHelper.checkAppVersion();
+                        } else {
+                            Toast.makeText(LoginLandActivity.this, "无读写文件权限", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
     private void initViews() {
         etUsername = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
@@ -552,7 +584,7 @@ public class LoginLandActivity extends AppCompatActivity {
                 });
     }
 
-    private void showLoadingDialog(String msg, String tag) {
+    public void showLoadingDialog(String msg, String tag) {
         if (tag == "SUCCESS") {
             if (tipLoadDialog != null) {
                 tipLoadDialog.setMsgAndType(msg, TipLoadDialog.ICON_TYPE_SUCCESS).show();
@@ -613,5 +645,10 @@ public class LoginLandActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public int getContentPlaceHolderId() {
+        return R.id.fl_main_content;
     }
 }
